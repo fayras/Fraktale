@@ -12,7 +12,7 @@ FractalWindow::FractalWindow(QWidget *parent)
   : QDialog(parent)
 {
   QHBoxLayout *mainLayout = new QHBoxLayout;
-  mainLayout->addWidget(createCanvas());
+  mainLayout->addWidget(canvas = createCanvas());
   mainLayout->addWidget(createSettings());
 
   setLayout(mainLayout);
