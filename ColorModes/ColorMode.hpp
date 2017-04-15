@@ -3,16 +3,18 @@
 
 #include <QtGui/QRgb>
 #include <memory>
+#include "../Fractals/FractalPixelIteration.hpp"
 
 class ColorMode {
   public:
     typedef std::unique_ptr<ColorMode> Ptr;
 
     ColorMode();
-    QRgb getColor(int it) const;
+
+    virtual QRgb getColor(FractalPixelIteration& it) const;
 
   protected:
-    enum { ColormapSize = 512 };
+    enum { ColormapSize = 256 };
     QRgb colormap[ColormapSize];
     QRgb inSetColor;
 

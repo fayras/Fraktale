@@ -3,13 +3,14 @@
 
 #include "Fractal.hpp"
 #include "../Rendering/MandelbrotRenderTask.hpp"
+#include "FractalPixelIteration.hpp"
 #include <vector>
 
 class Mandelbrot : public Fractal {
     Q_OBJECT
 
   public slots:
-    void updatePixels(std::vector<MandelbrotRenderTask::PixelIteration> pixelIterations);
+    void updatePixels(std::vector<FractalPixelIteration> pixelIterations);
 
   public:
     Mandelbrot(int width, int height);

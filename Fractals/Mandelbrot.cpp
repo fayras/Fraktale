@@ -1,19 +1,21 @@
 #include "Mandelbrot.hpp"
 #include "../ColorModes/WaveLengthMode.hpp"
 #include "../ColorModes/Grayscale.hpp"
+#include "../ColorModes/SmoothGradient.hpp"
 #include <QDebug>
 
 Mandelbrot::Mandelbrot(int width, int height)
   : Fractal(width, height), bounds(-2.5, -1, 3.5, 2)
 {
-  qRegisterMetaType<std::vector<MandelbrotRenderTask::PixelIteration> >();
+  qRegisterMetaType<std::vector<FractalPixelIteration> >();
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
     workers.push_back(new MandelbrotRenderTask());
     connect(workers[i], &MandelbrotRenderTask::rendered, this, &Mandelbrot::updatePixels);
   };
   registerColorMode<Grayscale>(Colors::ID::GRAYSCALE);
   registerColorMode<WaveLengthMode>(Colors::ID::WAVELENGTH);
-  setColorMode(Colors::ID::GRAYSCALE);
+  registerColorMode<SmoothGradient>(Colors::ID::SMOOTH);
+  setColorMode(Colors::ID::WAVELENGTH);
 }
 
 void Mandelbrot::update() {
@@ -51,10 +53,10 @@ void Mandelbrot::calculatePixels() {
   }
 }
 
-void Mandelbrot::updatePixels(std::vector<MandelbrotRenderTask::PixelIteration> pixelIterations) {
-  for(MandelbrotRenderTask::PixelIteration& it : pixelIterations) {
+void Mandelbrot::updatePixels(std::vector<FractalPixelIteration> pixelIterations) {
+  for(FractalPixelIteration& it : pixelIterations) {
     if(it.x < image.width() && it.y < image.height()) {
-      image.setPixel(it.x, it.y, colormap->getColor(it.iterations));
+      image.setPixel(it.x, it.y, colormap->getColor(it));
     }
   }
   emit drawSignal();
@@ -62,7 +64,7 @@ void Mandelbrot::updatePixels(std::vector<MandelbrotRenderTask::PixelIteration> 
 
 void Mandelbrot::calculatePreview(QPoint center, double zoom) {
   QTransform transform;
-  transform.translate(100, 100);
+  transform.translate(center.x(), center.y());
   image = image.transformed(transform);
   emit drawSignal();
 }

@@ -17,7 +17,7 @@ MandelbrotRenderTask::~MandelbrotRenderTask() {
 
 void MandelbrotRenderTask::run() {
   for(int pass = 8; pass > 0; pass = pass >> 1) {
-    std::vector<PixelIteration> pixelIterations;
+    std::vector<FractalPixelIteration> pixelIterations;
     double passMaxIt = maxIterations / pass;
     for(int w = rect.left(); w < rect.right(); w += pass) {
       double x0 = map(w, rect.left(), rect.right(), fractalBounds.left(), fractalBounds.right());
@@ -40,9 +40,9 @@ void MandelbrotRenderTask::run() {
         for(int passW = 0; passW < pass; passW++) {
           for(int passH = 0; passH < pass; passH++) {
             if(iterations < passMaxIt) {
-              pixelIterations.push_back(PixelIteration(w + passW, h + passH, iterations, x, y));
+              pixelIterations.push_back(FractalPixelIteration(w + passW, h + passH, iterations, (int) passMaxIt, x, y));
             } else {
-              pixelIterations.push_back(PixelIteration(w + passW, h + passH, -1, x, y));
+              pixelIterations.push_back(FractalPixelIteration(w + passW, h + passH, -1, (int) passMaxIt, x, y));
             }
           }
         }

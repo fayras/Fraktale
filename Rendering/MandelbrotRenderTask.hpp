@@ -3,6 +3,8 @@
 
 #include <QThread>
 #include <QtCore/QRect>
+#include "../Fractals/Fractal.hpp"
+#include "../Fractals/FractalPixelIteration.hpp"
 
 class MandelbrotRenderTask : public QThread {
     Q_OBJECT
@@ -11,21 +13,8 @@ class MandelbrotRenderTask : public QThread {
     MandelbrotRenderTask(QObject *parent = 0);
     ~MandelbrotRenderTask();
 
-  public:
-    struct PixelIteration {
-      PixelIteration(int pX, int pY, int pIt, double pXV, double pYV) {
-        x = pX; y = pY; iterations = pIt; xValue = pXV; yValue = pYV;
-      }
-
-      int x;
-      int y;
-      int iterations;
-      double xValue;
-      double yValue;
-    };
-
   signals:
-    void rendered(std::vector<MandelbrotRenderTask::PixelIteration> pixelIterations);
+    void rendered(std::vector<FractalPixelIteration> pixelIterations);
 
   public:
     void run() override;
@@ -37,7 +26,5 @@ class MandelbrotRenderTask : public QThread {
     int maxIterations;
     bool restart;
 };
-
-Q_DECLARE_METATYPE(std::vector<MandelbrotRenderTask::PixelIteration>);
 
 #endif //FRAKTALE_MANDELBROTRENDERTASK_HPP
