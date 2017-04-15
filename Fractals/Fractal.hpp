@@ -28,8 +28,8 @@ class Fractal : public QObject {
     Fractal(int width, int height);
 
     void update(QPoint center);
-    void update(double zoom);
-    void update(QPoint center, double zoom);
+    void update(double factor);
+    void update(QPoint center, double factor);
     virtual void update() = 0;
     virtual void draw(Canvas& target);
     virtual void resize(int pWidth, int pHeight);

@@ -61,7 +61,7 @@ class FractalWindow : public QDialog {
      *               soll. Dabei ist z.B. factor = 2 gleichbedeutend mit
      *               herauszoomen, factor = 0.5 mit hereinzoomen usw.
      */
-    void zoom(QPoint center, double factor);
+    void moveFractal(QPoint center, double factor);
 
     /**
      * Registriert ein neues Fraktal mit der ID fractalID, welches

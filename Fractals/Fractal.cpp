@@ -53,14 +53,14 @@ void Fractal::update(QPoint center) {
   update();
 }
 
-void Fractal::update(double zoom) {
-  scale = zoom;
+void Fractal::update(double factor) {
+  scale *= factor;
   update();
 }
 
-void Fractal::update(QPoint center, double zoom) {
+void Fractal::update(QPoint center, double factor) {
   fractalCenter = center;
-  scale = zoom;
+  scale *= factor;
   update();
 }
 

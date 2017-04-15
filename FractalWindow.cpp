@@ -12,7 +12,7 @@
 #include "Fractals/EmptyFractal.hpp"
 
 FractalWindow::FractalWindow(QWidget *parent)
-  : QDialog(parent), isDragging(false), currentFractal(new EmptyFractal()), scale(1)
+  : QDialog(parent), isDragging(false), currentFractal(new EmptyFractal())
 {
   connect(currentFractal.get(), &Fractal::drawSignal, this, &FractalWindow::draw);
 
@@ -44,10 +44,6 @@ QWidget* FractalWindow::createSettings() {
   registerFractal<Mandelbrot>(Fractals::ID::MANDELBROT);
 
   formLayout->addRow(new QLabel("Fraktal"), fractals);
-  //QFrame* line = new QFrame;
-  //line->setFrameStyle(QFrame::HLine);
-  //line->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Expanding);
-  //formLayout->addRow(line);
   connect(fractals, &QComboBox::currentTextChanged, [=](const QString& text){
     this->createFractal(fractals->currentData().value<Fractals::ID>());
   });
@@ -65,9 +61,8 @@ void FractalWindow::resizeEvent(QResizeEvent *event) {
   currentFractal->update(fractalCenter);
 }
 
-void FractalWindow::zoom(QPoint center, double factor) {
-  scale *= factor;
-  currentFractal->update(center, scale);
+void FractalWindow::moveFractal(QPoint center, double factor) {
+  currentFractal->update(center, factor);
 }
 
 void FractalWindow::draw() {
@@ -80,15 +75,14 @@ void FractalWindow::wheelEvent(QWheelEvent *event) {
     int numDegrees = event->delta() / 8;
     double steps = numDegrees / 15.0;
     if(steps < 0) {
-      zoom(fractalCenter, -steps * 2);
+      moveFractal(fractalCenter, -steps * 2);
     } else {
-      zoom(fractalCenter, 1 / (steps * 2));
+      moveFractal(fractalCenter, 1 / (steps * 2));
     }
   }
 }
 
 void FractalWindow::mousePressEvent(QMouseEvent *event) {
-  //QWidget::mousePressEvent(event);
   if(canvas.underMouse() && event->buttons() & Qt::LeftButton) {
     isDragging = true;
     lastDragPos = event->pos();
@@ -96,20 +90,18 @@ void FractalWindow::mousePressEvent(QMouseEvent *event) {
 }
 
 void FractalWindow::mouseReleaseEvent(QMouseEvent *event) {
-  //QWidget::mouseReleaseEvent(event);
   isDragging = false;
   lastDragPos = QPoint();
 }
 
 void FractalWindow::mouseMoveEvent(QMouseEvent *event) {
-  //QWidget::mouseMoveEvent(event);
   if(isDragging) {
     QPoint offset = event->pos() - lastDragPos;
     QPoint fractalCenter;
     fractalCenter.setX(canvas.width() / 2 - offset.x());
     fractalCenter.setY(canvas.height() / 2 - offset.y());
     lastDragPos = event->pos();
-    currentFractal->update(fractalCenter, scale);
+    currentFractal->update(fractalCenter);
   }
 }
 
@@ -121,15 +113,13 @@ void FractalWindow::createFractal(Fractals::ID fractalID) {
 
   currentFractal = std::move(found->second());
   connect(currentFractal.get(), &Fractal::drawSignal, this, &FractalWindow::draw);
-  QPoint fractalCenter(canvas.size().width() / 2, canvas.size().height() / 2);
-  currentFractal->update(fractalCenter, scale);
   for(auto const &setting : currentFractal->getSettings()) {
     settings->addRow(new QLabel(setting.first), setting.second);
   }
+  currentFractal->update();
 }
 
 void FractalWindow::resetFractal() {
-  scale = 1;
   while(settings->rowCount() > 0) {
     settings->removeRow(0);
   }
