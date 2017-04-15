@@ -1,6 +1,6 @@
-#include <QtGui/QPainter>
-#include <QDebug>
 #include "EmptyFractal.hpp"
+#include "../Canvas.hpp"
+#include <QtGui/QPainter>
 
 EmptyFractal::EmptyFractal(int width, int height)
     : Fractal(width, height)

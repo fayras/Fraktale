@@ -3,7 +3,8 @@
 
 #include <QtGui/QRgb>
 #include <memory>
-#include "../Fractals/FractalPixelIteration.hpp"
+
+struct FractalPixelIteration;
 
 class ColorMode {
   public:

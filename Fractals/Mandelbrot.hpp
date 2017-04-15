@@ -2,6 +2,7 @@
 #define FRAKTALE_MANDELBROT_HPP
 
 #include "Fractal.hpp"
+#include "FractalPixelIteration.hpp"
 #include <vector>
 
 class MandelbrotRenderTask;

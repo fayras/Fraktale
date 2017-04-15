@@ -4,7 +4,7 @@
 #include <QtCore/QMetaType>
 
 namespace Colors {
-  enum ID {
+  enum ID : unsigned {
     GRAYSCALE,
     WAVELENGTH,
     SMOOTH_WAVELENGTH

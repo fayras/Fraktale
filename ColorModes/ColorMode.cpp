@@ -1,4 +1,5 @@
 #include "ColorMode.hpp"
+#include "../Fractals/FractalPixelIteration.hpp"
 
 ColorMode::ColorMode()
     : inSetColor(qRgb(0, 0, 0))

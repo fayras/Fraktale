@@ -40,7 +40,7 @@ QWidget* FractalWindow::createSettings() {
   fractals->addItem("Mandelbrot", Fractals::ID::MANDELBROT);
   registerFractal<Mandelbrot>(Fractals::ID::MANDELBROT);
 
-  formLayout->addRow(new QLabel("Fraktal"), fractals);
+  formLayout->addRow("Fraktal", fractals);
   connect(fractals, &QComboBox::currentTextChanged, [=](const QString& text){
     this->createFractal(fractals->currentData().value<Fractals::ID>());
   });
@@ -111,7 +111,7 @@ void FractalWindow::createFractal(Fractals::ID fractalID) {
   currentFractal = std::move(found->second());
   connect(currentFractal.get(), &Fractal::drawSignal, this, &FractalWindow::draw);
   for(auto const &setting : currentFractal->getSettings()) {
-    settings->addRow(new QLabel(setting.first), setting.second);
+    settings->addRow(setting.first, setting.second);
   }
   currentFractal->update();
 }

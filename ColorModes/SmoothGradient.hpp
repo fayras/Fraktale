@@ -2,7 +2,6 @@
 #define FRAKTALE_SMOOTHGRADIENT_HPP
 
 #include "ColorMode.hpp"
-#include "../Fractals/Fractal.hpp"
 
 class SmoothGradient : public ColorMode {
   public:

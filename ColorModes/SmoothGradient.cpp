@@ -1,4 +1,6 @@
 #include "SmoothGradient.hpp"
+#include "../Fractals/FractalPixelIteration.hpp"
+#include <QColor>
 
 SmoothGradient::SmoothGradient(bool smooth)
   : ColorMode(), smooth(smooth)
