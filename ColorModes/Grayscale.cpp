@@ -1,7 +1,3 @@
-//
-// Created by dimitri on 14.04.17.
-//
-
 #include "Grayscale.hpp"
 
 Grayscale::Grayscale() {
@@ -10,6 +6,6 @@ Grayscale::Grayscale() {
 
 void Grayscale::fillColormap() {
   for (int i = 0; i < ColormapSize; ++i) {
-    colormap[i] = qRgb(i % 255, i % 255, i % 255);
+    colormap[i] = qRgb(i % 256, i % 256, i % 256);
   }
 }

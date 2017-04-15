@@ -1,7 +1,3 @@
-//
-// Created by dimitri on 11.04.17.
-//
-
 #include <QtGui/QPainter>
 #include <QDebug>
 #include "EmptyFractal.hpp"

@@ -11,7 +11,6 @@
 #include "Fractals/Mandelbrot.hpp"
 #include "Fractals/EmptyFractal.hpp"
 
-
 FractalWindow::FractalWindow(QWidget *parent)
   : QDialog(parent), isDragging(false), currentFractal(new EmptyFractal()), scale(1)
 {

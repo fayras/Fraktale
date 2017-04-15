@@ -49,5 +49,4 @@ void FractalWindow::registerFractal(Fractals::ID fractalID) {
   };
 }
 
-
 #endif //FRAKTALE_FRACTALWINDOW_HPP

@@ -17,7 +17,6 @@ struct FractalPixelIteration {
   double yValue;
 };
 
-
 Q_DECLARE_METATYPE(std::vector<FractalPixelIteration>);
 
 #endif //FRAKTALE_FRACTALPIXELITERATION_HPP

@@ -1,7 +1,3 @@
-//
-// Created by dimitri on 13.04.17.
-//
-
 #include "WaveLengthMode.hpp"
 
 WaveLengthMode::WaveLengthMode() {

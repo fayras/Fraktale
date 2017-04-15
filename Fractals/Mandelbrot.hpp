@@ -23,7 +23,6 @@ class Mandelbrot : public Fractal {
 
     void calculateNewBounds(QPoint center, double zoom);
     void calculatePixels();
-
 };
 
 #endif //FRAKTALE_MANDELBROT_HPP

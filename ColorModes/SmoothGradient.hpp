@@ -1,7 +1,6 @@
 #ifndef FRAKTALE_SMOOTHGRADIENT_HPP
 #define FRAKTALE_SMOOTHGRADIENT_HPP
 
-
 #include "ColorMode.hpp"
 #include "../Fractals/Fractal.hpp"
 #include "WaveLengthMode.hpp"
@@ -17,6 +16,5 @@ class SmoothGradient : public WaveLengthMode {
 
     QGradient gradient;
 };
-
 
 #endif //FRAKTALE_SMOOTHGRADIENT_HPP
