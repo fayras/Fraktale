@@ -1,6 +1,9 @@
 #include "WaveLengthMode.hpp"
+#include "SmoothGradient.hpp"
 
-WaveLengthMode::WaveLengthMode() {
+WaveLengthMode::WaveLengthMode(bool smooth)
+    : SmoothGradient(smooth)
+{
   fillColormap();
 }
 

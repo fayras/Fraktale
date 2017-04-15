@@ -34,8 +34,8 @@ class Fractal : public QObject {
     virtual void draw(Canvas& target);
     virtual void resize(int pWidth, int pHeight);
     virtual std::map<QString, QWidget*> getSettings();
-    template <typename T>
-    void registerColorMode(Colors::ID colorID);
+    template <typename T, typename... Args>
+    void registerColorMode(Colors::ID colorID, Args&&... args);
 
   protected:
     QImage image;
@@ -48,10 +48,10 @@ class Fractal : public QObject {
     std::map<Colors::ID, std::function<ColorMode::Ptr()>> colorsFactory;
 };
 
-template<typename T>
-void Fractal::registerColorMode(Colors::ID colorID) {
-  colorsFactory[colorID] = [this] () {
-    return ColorMode::Ptr(new T());
+template<typename T, typename... Args>
+void Fractal::registerColorMode(Colors::ID colorID, Args&&... args) {
+  colorsFactory[colorID] = [=] () {
+    return ColorMode::Ptr(new T(args...));
   };
 }
 

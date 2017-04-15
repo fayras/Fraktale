@@ -13,8 +13,8 @@ Mandelbrot::Mandelbrot(int width, int height)
     connect(workers[i], &MandelbrotRenderTask::rendered, this, &Mandelbrot::updatePixels);
   };
   registerColorMode<Grayscale>(Colors::ID::GRAYSCALE);
-  registerColorMode<WaveLengthMode>(Colors::ID::WAVELENGTH);
-  registerColorMode<SmoothGradient>(Colors::ID::SMOOTH);
+  registerColorMode<WaveLengthMode>(Colors::ID::WAVELENGTH, false);
+  registerColorMode<WaveLengthMode>(Colors::ID::SMOOTH_WAVELENGTH, true);
   setColorMode(Colors::ID::WAVELENGTH);
 }
 

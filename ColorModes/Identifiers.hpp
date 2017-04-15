@@ -7,7 +7,7 @@ namespace Colors {
   enum ID {
     GRAYSCALE,
     WAVELENGTH,
-    SMOOTH
+    SMOOTH_WAVELENGTH
   };
 }
 

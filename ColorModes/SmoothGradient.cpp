@@ -1,6 +1,9 @@
 #include "SmoothGradient.hpp"
 
-SmoothGradient::SmoothGradient() {
+SmoothGradient::SmoothGradient(bool smooth)
+  : ColorMode(), smooth(smooth)
+{
+  /*
   gradient.setColorAt(0.0, QColor(0, 7, 100));
   gradient.setColorAt(0.16, QColor(32, 107, 203));
   gradient.setColorAt(0.42, QColor(237, 255, 255));
@@ -8,13 +11,13 @@ SmoothGradient::SmoothGradient() {
   gradient.setColorAt(0.8575, QColor(0, 2, 0));
   gradient.setColorAt(1.0, QColor(0, 7, 100));
   fillColormap();
-}
-
-void SmoothGradient::fillColormap() {
-  WaveLengthMode::fillColormap();
+   */
 }
 
 QRgb SmoothGradient::getColor(FractalPixelIteration& it) const {
+  if(!smooth) {
+    return ColorMode::getColor(it);
+  }
   if(it.iterations == -1) {
     return inSetColor;
   }

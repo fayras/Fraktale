@@ -3,18 +3,16 @@
 
 #include "ColorMode.hpp"
 #include "../Fractals/Fractal.hpp"
-#include "WaveLengthMode.hpp"
 
-class SmoothGradient : public WaveLengthMode {
+class SmoothGradient : public ColorMode {
   public:
-    SmoothGradient();
+    SmoothGradient(bool smooth = true);
     QRgb getColor(FractalPixelIteration& it) const override;
     int interpolate(int start, int end, double fraction) const;
 
   protected:
-    void fillColormap() override;
-
-    QGradient gradient;
+    bool smooth;
+    //QGradient gradient;
 };
 
 #endif //FRAKTALE_SMOOTHGRADIENT_HPP

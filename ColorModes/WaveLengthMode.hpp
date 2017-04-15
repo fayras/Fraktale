@@ -1,11 +1,11 @@
 #ifndef FRAKTALE_WAVELENGTHMODE_HPP
 #define FRAKTALE_WAVELENGTHMODE_HPP
 
-#include "ColorMode.hpp"
+#include "SmoothGradient.hpp"
 
-class WaveLengthMode : public ColorMode {
+class WaveLengthMode : public SmoothGradient {
   public:
-    WaveLengthMode();
+    WaveLengthMode(bool smooth = true);
 
   protected:
     void fillColormap() override;
