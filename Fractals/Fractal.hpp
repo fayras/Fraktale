@@ -1,16 +1,17 @@
 #ifndef FRAKTALE_FRACTAL_HPP
 #define FRAKTALE_FRACTAL_HPP
 
-#include <vector>
 #include <QObject>
-#include <QtCore/QPoint>
-#include <QtGui/QRgb>
-#include <QtGui/QPixmap>
-#include <QtWidgets/QLabel>
+#include <QPoint>
+#include <QImage>
 #include <memory>
-#include "../Canvas.hpp"
 #include "../ColorModes/ColorMode.hpp"
-#include "../ColorModes/Identifiers.hpp"
+
+namespace Colors {
+  enum ID : unsigned;
+}
+
+class Canvas;
 
 class Fractal : public QObject {
     Q_OBJECT

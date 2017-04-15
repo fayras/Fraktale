@@ -2,12 +2,14 @@
 #define FRAKTALE_FRACTALWINDOW_HPP
 
 #include <QtWidgets/QDialog>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QFormLayout>
-#include <QtWidgets/QComboBox>
-#include "Fractals/Fractal.hpp"
 #include "Canvas.hpp"
-#include "Fractals/Identifiers.hpp"
+#include "Fractals/Fractal.hpp"
+
+namespace Fractals {
+  enum ID : unsigned;
+}
+
+class QFormLayout;
 
 /**
  * Dies ist das Hauptfenster, welches die Frak-
@@ -89,7 +91,6 @@ class FractalWindow : public QDialog {
     /**
      * Der aktuelle Zoomlevel.
      */
-    double scale;
     bool isDragging;
     QPoint lastDragPos;
     QFormLayout* settings;

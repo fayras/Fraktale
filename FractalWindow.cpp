@@ -1,13 +1,10 @@
-#include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QGroupBox>
-#include <QtWidgets/QFormLayout>
-#include <QtWidgets/QLineEdit>
-#include <QtGui/QPainter>
+#include <QFormLayout>
+#include <QGroupBox>
+#include <QComboBox>
 #include <QWheelEvent>
-#include <QDebug>
 #include <cassert>
 #include "FractalWindow.hpp"
+#include "Fractals/Identifiers.hpp"
 #include "Fractals/Mandelbrot.hpp"
 #include "Fractals/EmptyFractal.hpp"
 

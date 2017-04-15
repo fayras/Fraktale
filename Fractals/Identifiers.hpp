@@ -2,7 +2,7 @@
 #define FRAKTALE_FRACTALIDENTIFIERS_HPP
 
 namespace Fractals {
-  enum ID {
+  enum ID : unsigned {
     EMPTY_FRACTAL,
     MANDELBROT
   };

@@ -1,8 +1,8 @@
 #include "Mandelbrot.hpp"
+#include "../Rendering/MandelbrotRenderTask.hpp"
+#include "../ColorModes/Identifiers.hpp"
 #include "../ColorModes/WaveLengthMode.hpp"
 #include "../ColorModes/Grayscale.hpp"
-#include "../ColorModes/SmoothGradient.hpp"
-#include <QDebug>
 
 Mandelbrot::Mandelbrot(int width, int height)
   : Fractal(width, height), bounds(-2.5, -1, 3.5, 2)

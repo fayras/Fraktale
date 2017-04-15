@@ -3,8 +3,8 @@
 
 #include <QThread>
 #include <QtCore/QRect>
-#include "../Fractals/Fractal.hpp"
-#include "../Fractals/FractalPixelIteration.hpp"
+
+struct FractalPixelIteration;
 
 class MandelbrotRenderTask : public QThread {
     Q_OBJECT

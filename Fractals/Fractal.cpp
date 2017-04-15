@@ -1,7 +1,9 @@
+#include "Fractal.hpp"
+#include "../Canvas.hpp"
+#include "../ColorModes/Identifiers.hpp"
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QComboBox>
 #include <cassert>
-#include "Fractal.hpp"
 
 Fractal::Fractal(int width, int height)
   : width(width), height(height),

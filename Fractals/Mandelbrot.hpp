@@ -2,9 +2,9 @@
 #define FRAKTALE_MANDELBROT_HPP
 
 #include "Fractal.hpp"
-#include "../Rendering/MandelbrotRenderTask.hpp"
-#include "FractalPixelIteration.hpp"
 #include <vector>
+
+class MandelbrotRenderTask;
 
 class Mandelbrot : public Fractal {
     Q_OBJECT
