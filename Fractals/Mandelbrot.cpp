@@ -3,6 +3,7 @@
 #include "../ColorModes/Identifiers.hpp"
 #include "../ColorModes/WaveLengthMode.hpp"
 #include "../ColorModes/Grayscale.hpp"
+#include <QPainter>
 
 Mandelbrot::Mandelbrot(int width, int height)
   : Fractal(width, height), bounds(-2.5, -1, 3.5, 2)
@@ -19,7 +20,7 @@ Mandelbrot::Mandelbrot(int width, int height)
 }
 
 void Mandelbrot::update() {
-  //calculatePreview(fractalCenter, scale);
+  calculatePreview(fractalCenter, scale);
   calculateNewBounds(fractalCenter, scale);
   calculatePixels();
 }
@@ -63,8 +64,12 @@ void Mandelbrot::updatePixels(std::vector<FractalPixelIteration> pixelIterations
 }
 
 void Mandelbrot::calculatePreview(QPoint center, double zoom) {
-  QTransform transform;
-  transform.translate(center.x(), center.y());
-  image = image.transformed(transform);
+  QImage traslated(image);
+  QPainter painter(&image);
+  QPoint translate(width / 2 - center.x(), height / 2 - center.y());
+
+  image.fill(Qt::black);
+  painter.drawImage(translate, traslated);
+
   emit drawSignal();
 }

@@ -51,7 +51,7 @@ class Fractal : public QObject {
 
 template<typename T, typename... Args>
 void Fractal::registerColorMode(Colors::ID colorID, Args&&... args) {
-  colorsFactory[colorID] = [=] () {
+  colorsFactory[colorID] = [=] () -> ColorMode::Ptr {
     return ColorMode::Ptr(new T(args...));
   };
 }

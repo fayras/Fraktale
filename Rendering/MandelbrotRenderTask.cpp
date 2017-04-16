@@ -36,15 +36,15 @@ void MandelbrotRenderTask::run() {
           iterations++;
         }
 
-        for(int passW = 0; passW < pass; passW++) {
-          for(int passH = 0; passH < pass; passH++) {
+        //for(int passW = 0; passW < pass; passW++) {
+          //for(int passH = 0; passH < pass; passH++) {
             if(iterations < passMaxIt) {
-              pixelIterations.push_back(FractalPixelIteration(w + passW, h + passH, iterations, (int) passMaxIt, x, y));
+              pixelIterations.push_back(FractalPixelIteration(w, h, iterations, (int) passMaxIt, x, y));
             } else {
-              pixelIterations.push_back(FractalPixelIteration(w + passW, h + passH, -1, (int) passMaxIt, x, y));
+              pixelIterations.push_back(FractalPixelIteration(w, h, -1, (int) passMaxIt, x, y));
             }
-          }
-        }
+          //}
+        //}
       }
     }
     emit rendered(pixelIterations);

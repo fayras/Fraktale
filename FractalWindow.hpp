@@ -109,7 +109,7 @@ class FractalWindow : public QDialog {
 
 template<typename T>
 void FractalWindow::registerFractal(Fractals::ID fractalID) {
-  fractalFactory[fractalID] = [this] () {
+  fractalFactory[fractalID] = [this] () -> Fractal::Ptr {
     return Fractal::Ptr(new T(canvas.size().width(), canvas.size().height()));
   };
 }
