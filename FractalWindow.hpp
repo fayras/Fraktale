@@ -89,22 +89,71 @@ class FractalWindow : public QDialog {
      */
     Fractal::Ptr currentFractal;
     /**
-     * Der aktuelle Zoomlevel.
+     * Variable, welche angibt, ob das Fraktal zur Zeit bewegt wird.
      */
     bool isDragging;
+    /**
+     * Die Letzte Position der Maus beim Bewegen des
+     * Fraktals, in lokalen Koordinaten des Widgets.
+     */
     QPoint lastDragPos;
+    /**
+     * Ein Pointer auf das Layout mit den Ein-
+     * stellungen der einzelnen Fraktale.
+     */
     QFormLayout* settings;
+    /**
+     * Eine Membervariable, welche Funktionen zum Erzeugen
+     * von Fraktalen einer Frktal-ID zuordnet.
+     */
     std::map<Fractals::ID, std::function<Fractal::Ptr()>> fractalFactory;
 
+    /**
+     * Erzeugt die Einstellungen des Widgets, wo man Fraktale
+     * und die spezifischen Einstellungen wählen kann.
+     * Dabei wird ein Pointer zurückgegeben, dessen
+     * Eigentum selbst bestimmt werden muss.
+     *
+     * @return Ein Zeiger, welcher auf ein QWidget
+     *         mit den Einstellungen deutet.
+     */
     QWidget* createSettings();
 
+    /**
+     * Ein Event, welches ausgelöst wird, wenn
+     * das Fenster in der Größe verändert wird.
+     *
+     * @param event
+     */
     void resizeEvent(QResizeEvent *event) override;
+    /**
+     * Ein Event, welches ausgelöst wird,
+     * wenn das Mausrad bewegt wird.
+     *
+     * @param event
+     */
     void wheelEvent(QWheelEvent *event) override;
+    /**
+     * Ein Event, welches ausgelöst wird,
+     * wenn eine Maustaste gedrückt wird.
+     *
+     * @param event
+     */
     void mousePressEvent(QMouseEvent *event) override;
+    /**
+     * Ein Event, welches ausgelöst wird, wenn
+     * eine Maustaste losgelassen wird.
+     *
+     * @param event
+     */
     void mouseReleaseEvent(QMouseEvent *event) override;
+    /**
+     * Ein Event, welches ausgelöst wird,
+     * wenn die Maus bewegt wird.
+     *
+     * @param event
+     */
     void mouseMoveEvent(QMouseEvent *event) override;
-
-    void resetFractal();
 };
 
 template<typename T>

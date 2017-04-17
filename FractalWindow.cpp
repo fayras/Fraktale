@@ -103,21 +103,17 @@ void FractalWindow::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void FractalWindow::createFractal(Fractals::ID fractalID) {
-  resetFractal();
-
   auto found = fractalFactory.find(fractalID);
   assert(found != fractalFactory.end());
 
   currentFractal = std::move(found->second());
   connect(currentFractal.get(), &Fractal::drawSignal, this, &FractalWindow::draw);
+
+  while(settings->rowCount() > 0) {
+    settings->removeRow(0);
+  }
   for(auto const &setting : currentFractal->getSettings()) {
     settings->addRow(setting.first, setting.second);
   }
   currentFractal->update();
-}
-
-void FractalWindow::resetFractal() {
-  while(settings->rowCount() > 0) {
-    settings->removeRow(0);
-  }
 }
