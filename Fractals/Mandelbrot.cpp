@@ -10,7 +10,7 @@ Mandelbrot::Mandelbrot(int width, int height)
 {
   qRegisterMetaType<std::vector<FractalPixelIteration> >();
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
-    workers.push_back(new MandelbrotRenderTask());
+    workers.push_back(new MandelbrotRenderTask(this));
     connect(workers[i], &MandelbrotRenderTask::rendered, this, &Mandelbrot::updatePixels);
   };
   registerColorMode<Grayscale>(Colors::ID::GRAYSCALE);
