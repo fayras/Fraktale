@@ -26,7 +26,7 @@ void Mandelbrot::update() {
 }
 
 void Mandelbrot::calculateNewBounds(QPoint center, double zoom) {
-  QPointF offset((double) center.x() / width, (double) center.y() / height);
+  QPointF offset((double) center.x() / image.width(), (double) center.y() / image.height());
   bounds.setRect(
       bounds.left() + offset.x() * bounds.width() - 3.5 / 2 * zoom,
       bounds.top() + offset.y() * bounds.height() - zoom,
@@ -38,10 +38,10 @@ void Mandelbrot::calculateNewBounds(QPoint center, double zoom) {
 void Mandelbrot::calculatePixels() {
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
     QRect rect(
-        (int) std::floor(i * width / QThread::idealThreadCount()),
+        (int) std::floor(i * image.width() / QThread::idealThreadCount()),
         0,
-        (int) std::ceil((double) width / QThread::idealThreadCount()),
-        height
+        (int) std::ceil((double) image.width() / QThread::idealThreadCount()),
+        image.height()
     );
     QRectF tempBounds(
         bounds.left() + i * bounds.width() / QThread::idealThreadCount(),
@@ -66,7 +66,7 @@ void Mandelbrot::updatePixels(std::vector<FractalPixelIteration> pixelIterations
 void Mandelbrot::calculatePreview(QPoint center, double zoom) {
   QImage traslated(image);
   QPainter painter(&image);
-  QPoint translate(width / 2 - center.x(), height / 2 - center.y());
+  QPoint translate(image.width() / 2 - center.x(), image.height() / 2 - center.y());
 
   image.fill(Qt::black);
   painter.drawImage(translate, traslated);

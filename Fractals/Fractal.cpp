@@ -6,8 +6,7 @@
 #include <cassert>
 
 Fractal::Fractal(int width, int height)
-  : width(width), height(height),
-    maxIterations(1000),
+  : maxIterations(1000),
     image(width, height, QImage::Format_RGB32),
     scale(1), fractalCenter(width / 2, height / 2),
     colormap(nullptr)
@@ -16,9 +15,7 @@ Fractal::Fractal(int width, int height)
 }
 
 void Fractal::resize(int pWidth, int pHeight) {
-  width = pWidth;
-  height = pHeight;
-  image = image.scaled(width, height);
+  image = image.scaled(pWidth, pHeight);
 }
 
 void Fractal::draw(Canvas& target) {

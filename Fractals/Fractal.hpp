@@ -40,8 +40,6 @@ class Fractal : public QObject {
 
   protected:
     QImage image;
-    int width;
-    int height;
     ColorMode::Ptr colormap;
     unsigned maxIterations;
     QPoint fractalCenter;
