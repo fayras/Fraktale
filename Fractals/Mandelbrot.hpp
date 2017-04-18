@@ -16,14 +16,12 @@ class Mandelbrot : public Fractal {
   public:
     Mandelbrot(int width, int height);
     void update() override;
-    void calculatePreview(QPoint center, double zoom);
+    void translate(QPointF offset) override;
+    void scale(double factor) override;
 
   private:
     QRectF bounds;
     std::vector<MandelbrotRenderTask*> workers;
-
-    void calculateNewBounds(QPoint center, double zoom);
-    void calculatePixels();
 };
 
 #endif //FRAKTALE_MANDELBROT_HPP

@@ -56,16 +56,6 @@ class FractalWindow : public QDialog {
     explicit FractalWindow(QWidget *parent = 0);
 
     /**
-     * Verschiebt und/oder vergrößert oder verkleinert das aktuelle Fraktal.
-     *
-     * @param center Das neue Zentrum des aktiven Fraktals.
-     * @param factor Der Factor, um welchen das Fraktal vergrößert werden
-     *               soll. Dabei ist z.B. factor = 2 gleichbedeutend mit
-     *               herauszoomen, factor = 0.5 mit hereinzoomen usw.
-     */
-    void moveFractal(QPoint center, double factor);
-
-    /**
      * Registriert ein neues Fraktal mit der ID fractalID, welches
      * später mittels 'createFractal' erzeugt werden kann.
      *

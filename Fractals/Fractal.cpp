@@ -4,11 +4,12 @@
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QComboBox>
 #include <cassert>
+#include <QtGui/QPainter>
 
 Fractal::Fractal(int width, int height)
   : maxIterations(1000),
     image(width, height, QImage::Format_RGB32),
-    scale(1), fractalCenter(width / 2, height / 2),
+    fractalCenter(width / 2, height / 2),
     colormap(nullptr)
 {
   resize(width, height);
@@ -47,26 +48,33 @@ void Fractal::setMaxIterations(unsigned iterations) {
   update();
 }
 
-void Fractal::update(QPoint center) {
-  fractalCenter = center;
-  update();
-}
-
-void Fractal::update(double factor) {
-  scale *= factor;
-  update();
-}
-
-void Fractal::update(QPoint center, double factor) {
-  fractalCenter = center;
-  scale *= factor;
-  update();
-}
-
 void Fractal::setColorMode(Colors::ID colorsID) {
   auto found = colorsFactory.find(colorsID);
   assert(found != colorsFactory.end());
 
   colormap = std::move(found->second());
   update();
+}
+
+void Fractal::translate(QPointF offset) {
+  QImage traslated(image);
+  QPainter painter(&image);
+
+  image.fill(Qt::black);
+  painter.drawImage(offset, traslated);
+
+  emit drawSignal();
+}
+
+void Fractal::scale(double factor) {
+  QImage scaled(image);
+  QPainter painter(&image);
+
+  image.fill(Qt::black);
+  painter.translate(image.width() / 2, image.height() / 2);
+  painter.scale(factor, factor);
+  painter.translate(-image.width() / 2, -image.height() / 2);
+  painter.drawImage(0, 0, scaled);
+
+  emit drawSignal();
 }

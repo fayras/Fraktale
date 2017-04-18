@@ -52,14 +52,7 @@ QWidget* FractalWindow::createSettings() {
 
 void FractalWindow::resizeEvent(QResizeEvent *event) {
   currentFractal->resize(canvas.size().width(), canvas.size().height());
-  QPoint fractalCenter;
-  fractalCenter.setX(canvas.size().width() / 2);
-  fractalCenter.setY(canvas.size().height() / 2);
-  currentFractal->update(fractalCenter);
-}
-
-void FractalWindow::moveFractal(QPoint center, double factor) {
-  currentFractal->update(center, factor);
+  currentFractal->update();
 }
 
 void FractalWindow::draw() {
@@ -68,13 +61,14 @@ void FractalWindow::draw() {
 
 void FractalWindow::wheelEvent(QWheelEvent *event) {
   if(canvas.underMouse()) {
-    QPoint fractalCenter = canvas.mapFromGlobal(QCursor::pos());
-    int numDegrees = event->delta() / 8;
-    double steps = numDegrees / 15.0;
+    QPointF mousePos = canvas.mapFromGlobal(QCursor::pos());
+    QPointF offset = QPointF(canvas.width() / 2.0, canvas.height() / 2.0) - mousePos;
+    currentFractal->translate(offset);
+    double steps = event->delta() / 8 / 15.0;
     if(steps < 0) {
-      moveFractal(fractalCenter, -steps * 2);
+      currentFractal->scale(-1.0 / (steps * 2.0));
     } else {
-      moveFractal(fractalCenter, 1 / (steps * 2));
+      currentFractal->scale(steps * 2.0);
     }
   }
 }
@@ -94,11 +88,8 @@ void FractalWindow::mouseReleaseEvent(QMouseEvent *event) {
 void FractalWindow::mouseMoveEvent(QMouseEvent *event) {
   if(isDragging) {
     QPoint offset = event->pos() - lastDragPos;
-    QPoint fractalCenter;
-    fractalCenter.setX(canvas.width() / 2 - offset.x());
-    fractalCenter.setY(canvas.height() / 2 - offset.y());
     lastDragPos = event->pos();
-    currentFractal->update(fractalCenter);
+    currentFractal->translate(offset);
   }
 }
 

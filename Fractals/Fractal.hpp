@@ -28,9 +28,8 @@ class Fractal : public QObject {
 
     Fractal(int width, int height);
 
-    void update(QPoint center);
-    void update(double factor);
-    void update(QPoint center, double factor);
+    virtual void translate(QPointF offset);
+    virtual void scale(double factor);
     virtual void update() = 0;
     virtual void draw(Canvas& target);
     virtual void resize(int pWidth, int pHeight);
@@ -43,7 +42,6 @@ class Fractal : public QObject {
     ColorMode::Ptr colormap;
     unsigned maxIterations;
     QPoint fractalCenter;
-    double scale;
     std::map<Colors::ID, std::function<ColorMode::Ptr()>> colorsFactory;
 };
 

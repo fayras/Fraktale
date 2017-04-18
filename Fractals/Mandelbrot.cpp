@@ -20,22 +20,6 @@ Mandelbrot::Mandelbrot(int width, int height)
 }
 
 void Mandelbrot::update() {
-  calculatePreview(fractalCenter, scale);
-  calculateNewBounds(fractalCenter, scale);
-  calculatePixels();
-}
-
-void Mandelbrot::calculateNewBounds(QPoint center, double zoom) {
-  QPointF offset((double) center.x() / image.width(), (double) center.y() / image.height());
-  bounds.setRect(
-      bounds.left() + offset.x() * bounds.width() - 3.5 / 2 * zoom,
-      bounds.top() + offset.y() * bounds.height() - zoom,
-      3.5 * zoom,
-      2 * zoom
-  );
-}
-
-void Mandelbrot::calculatePixels() {
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
     QRect rect(
         (int) std::floor(i * image.width() / QThread::idealThreadCount()),
@@ -63,13 +47,23 @@ void Mandelbrot::updatePixels(std::vector<FractalPixelIteration> pixelIterations
   emit drawSignal();
 }
 
-void Mandelbrot::calculatePreview(QPoint center, double zoom) {
-  QImage traslated(image);
-  QPainter painter(&image);
-  QPoint translate(image.width() / 2 - center.x(), image.height() / 2 - center.y());
+void Mandelbrot::translate(QPointF offset) {
+  Fractal::translate(offset);
+  bounds.translate(
+      -offset.x() / image.width() * bounds.width(),
+      -offset.y() / image.height() * bounds.height()
+  );
+  update();
+}
 
-  image.fill(Qt::black);
-  painter.drawImage(translate, traslated);
-
-  emit drawSignal();
+void Mandelbrot::scale(double factor) {
+  Fractal::scale(factor);
+  QPointF center = bounds.center();
+  bounds.setRect(
+      center.x() - bounds.width() / factor / 2,
+      center.y() - bounds.height() / factor / 2,
+      bounds.width() / factor,
+      bounds.height() / factor
+  );
+  update();
 }
