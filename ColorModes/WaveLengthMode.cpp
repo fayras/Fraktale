@@ -1,4 +1,5 @@
 #include "WaveLengthMode.hpp"
+#include <cmath>
 
 WaveLengthMode::WaveLengthMode(bool smooth)
     : SmoothGradient(smooth)

@@ -4,6 +4,7 @@
 #include "../ColorModes/WaveLengthMode.hpp"
 #include "../ColorModes/Grayscale.hpp"
 #include <QPainter>
+#include <cmath>
 
 Mandelbrot::Mandelbrot(int width, int height)
   : Fractal(width, height), bounds(-2.5, -1, 3.5, 2)
