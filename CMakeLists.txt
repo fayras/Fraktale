@@ -1,7 +1,19 @@
 cmake_minimum_required(VERSION 3.5)
 project(Fraktale)
 
-set(CMAKE_CXX_STANDARD 14)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS "5.0")
+    set(CMAKE_CXX_COMPILER "clang++")
+  endif()
+endif()
+
+if (CMAKE_VERSION VERSION_LESS "3.1")
+  if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set (CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+  endif ()
+else ()
+  set (CMAKE_CXX_STANDARD 14)
+endif ()
 
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)

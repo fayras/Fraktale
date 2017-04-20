@@ -27,9 +27,9 @@ std::map<QString, QWidget*> Fractal::getSettings() {
   std::map<QString, QWidget *> map;
 
   QComboBox* colors = new QComboBox;
-  colors->addItem("Graustufen", Colors::ID::GRAYSCALE);
-  colors->addItem("Wellenlänge", Colors::ID::WAVELENGTH);
-  colors->addItem("Fließend", Colors::ID::SMOOTH_WAVELENGTH);
+  colors->addItem("Graustufen", QVariant::fromValue(Colors::ID::GRAYSCALE));
+  colors->addItem("Wellenlänge", QVariant::fromValue(Colors::ID::WAVELENGTH));
+  colors->addItem("Fließend", QVariant::fromValue(Colors::ID::SMOOTH_WAVELENGTH));
   map.insert(std::pair<QString, QWidget*>("Farbgebung", colors));
   connect(colors, &QComboBox::currentTextChanged, [=](const QString& text){
     this->setColorMode(colors->currentData().value<Colors::ID>());

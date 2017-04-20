@@ -34,10 +34,10 @@ QWidget* FractalWindow::createSettings() {
 
   QComboBox* fractals = new QComboBox;
 
-  fractals->addItem("Keine Auswahl", Fractals::ID::EMPTY_FRACTAL);
+  fractals->addItem("Keine Auswahl", QVariant::fromValue(Fractals::ID::EMPTY_FRACTAL));
   registerFractal<EmptyFractal>(Fractals::ID::EMPTY_FRACTAL);
 
-  fractals->addItem("Mandelbrot", Fractals::ID::MANDELBROT);
+  fractals->addItem("Mandelbrot", QVariant::fromValue(Fractals::ID::MANDELBROT));
   registerFractal<Mandelbrot>(Fractals::ID::MANDELBROT);
 
   formLayout->addRow("Fraktal", fractals);
@@ -100,8 +100,9 @@ void FractalWindow::createFractal(Fractals::ID fractalID) {
   currentFractal = std::move(found->second());
   connect(currentFractal.get(), &Fractal::drawSignal, this, &FractalWindow::draw);
 
-  while(settings->rowCount() > 0) {
-    settings->removeRow(0);
+  QLayoutItem* child;
+  while(settings->count() > 0 && (child = settings->takeAt(0)) != 0) {
+    delete child->widget();
   }
   for(auto const &setting : currentFractal->getSettings()) {
     settings->addRow(setting.first, setting.second);
