@@ -36,13 +36,19 @@ class Fractal : public QObject {
     virtual std::map<QString, QWidget*> getSettings();
     template <typename T, typename... Args>
     void registerColorMode(Colors::ID colorID, Args&&... args);
+    const QImage& getImage() const;
+
+    friend QDataStream& operator<<(QDataStream& os, const Fractal& fractal);
+    friend QDataStream& operator>>(QDataStream& os, Fractal& fractal);
 
   protected:
     QImage image;
     ColorMode::Ptr colormap;
     unsigned maxIterations;
-    QPoint fractalCenter;
     std::map<Colors::ID, std::function<ColorMode::Ptr()>> colorsFactory;
+
+    virtual QDataStream& print(QDataStream& os) const;
+    virtual QDataStream& read(QDataStream& os);
 };
 
 template<typename T, typename... Args>

@@ -9,7 +9,6 @@
 Fractal::Fractal(int width, int height)
   : maxIterations(1000),
     image(width, height, QImage::Format_RGB32),
-    fractalCenter(width / 2, height / 2),
     colormap(nullptr)
 {
   resize(width, height);
@@ -77,4 +76,24 @@ void Fractal::scale(double factor) {
   painter.drawImage(0, 0, scaled);
 
   emit drawSignal();
+}
+
+const QImage &Fractal::getImage() const {
+  return image;
+}
+
+QDataStream& operator<<(QDataStream& os, const Fractal& fractal) {
+  return fractal.print(os);
+}
+
+QDataStream &Fractal::print(QDataStream &os) const {
+  return os;
+}
+
+QDataStream& operator>>(QDataStream& os, Fractal& fractal) {
+  return fractal.read(os);
+}
+
+QDataStream &Fractal::read(QDataStream &os) {
+  return os;
 }

@@ -1,8 +1,13 @@
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QComboBox>
+#include <QPushButton>
 #include <QWheelEvent>
 #include <cassert>
+#include <QMenu>
+#include <QDebug>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QFileDialog>
 #include "FractalWindow.hpp"
 #include "Fractals/Identifiers.hpp"
 #include "Fractals/Mandelbrot.hpp"
@@ -41,11 +46,72 @@ QWidget* FractalWindow::createSettings() {
   registerFractal<Mandelbrot>(Fractals::ID::MANDELBROT);
 
   formLayout->addRow("Fraktal", fractals);
-  connect(fractals, &QComboBox::currentTextChanged, [=](const QString& text){
+  connect(fractals, &QComboBox::currentTextChanged, [=](const QString& text) {
     this->createFractal(fractals->currentData().value<Fractals::ID>());
   });
   settings = new QFormLayout;
   formLayout->addRow(settings);
+  formLayout->addItem(new QSpacerItem(0, 65000, QSizePolicy::Expanding, QSizePolicy::Expanding));
+
+  QHBoxLayout* buttons = new QHBoxLayout();
+  QPushButton* btExport = new QPushButton("Menü");
+  QMenu* menu = new QMenu();
+  connect(menu->addAction("Fraktal importieren"), &QAction::triggered, [=] () {
+    QString fileName = QFileDialog::getOpenFileName(
+        this, tr("Open File"),
+        "./",
+        tr("Fractal (*.frac)")
+    );
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly)) {
+      QMessageBox::information(this, tr("Unable to open file"),
+                               file.errorString());
+      return;
+    }
+    QDataStream in(&file);
+    unsigned id;
+    in >> id;
+    createFractal(static_cast<Fractals::ID>(id));
+    in >> *currentFractal;
+  });
+  menu->addSeparator();
+  connect(menu->addAction("Fraktal exportieren"), &QAction::triggered, [=] () {
+    QString fileName = QFileDialog::getSaveFileName(
+        this, tr("Save File"),
+        "./fractal.frac",
+        tr("Fractal (*.frac)")
+    );
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly|QFile::Truncate)) {
+      QMessageBox::information(this, tr("Unable to open file"),
+                               file.errorString());
+      return;
+    }
+    QDataStream out(&file);
+    out.setVersion(QDataStream::Qt_5_0);
+    out << fractals->currentData().value<unsigned>() << *currentFractal;
+  });
+  connect(menu->addAction("Als Bild exportieren"), &QAction::triggered, [this] () {
+    QString fileName = QFileDialog::getSaveFileName(
+        this, tr("Save File"),
+        "./fractal.png",
+        tr("Images (*.png *.xpm *.jpg)")
+    );
+    if(fileName.isEmpty()) {
+      return;
+    }
+    this->currentFractal->getImage().save(fileName);
+  });
+  btExport->setMenu(menu);
+  buttons->addWidget(btExport);
+  buttons->addItem(new QSpacerItem(200, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
+  QPushButton* info = new QPushButton("About");
+  connect(info, &QPushButton::clicked, [this] () {
+    QMessageBox::about(this, "About", "ABOUT PAGE...");
+  });
+  buttons->addWidget(info);
+  formLayout->addRow(buttons);
+
   settingsGroup->setLayout(formLayout);
   return settingsGroup;
 }

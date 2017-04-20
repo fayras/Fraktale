@@ -19,6 +19,10 @@ class Mandelbrot : public Fractal {
     void translate(QPointF offset) override;
     void scale(double factor) override;
 
+  protected:
+    QDataStream &print(QDataStream &os) const override;
+    QDataStream &read(QDataStream &os) override;
+
   private:
     QRectF bounds;
     std::vector<MandelbrotRenderTask*> workers;

@@ -68,3 +68,13 @@ void Mandelbrot::scale(double factor) {
   );
   update();
 }
+
+QDataStream &Mandelbrot::print(QDataStream &os) const {
+  return os << maxIterations << bounds;
+}
+
+QDataStream &Mandelbrot::read(QDataStream &os) {
+  os >> maxIterations >> bounds;
+  update();
+  return os;
+}
