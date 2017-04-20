@@ -18,9 +18,6 @@ endif ()
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
-# Set path to Qt Libraries.
-set (CMAKE_PREFIX_PATH "../Qt/5.8/gcc_64/lib/cmake")
-
 # Find Qt Libraries.
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
