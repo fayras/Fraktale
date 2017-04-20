@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
+        <file alias="about">html/about.html</file>
+        <file alias="placeholder">images/placeholder.png</file>
+    </qresource>
+</RCC>

@@ -57,15 +57,10 @@ QWidget* FractalWindow::createSettings() {
   QPushButton* btExport = new QPushButton("Menü");
   QMenu* menu = new QMenu();
   connect(menu->addAction("Fraktal importieren"), &QAction::triggered, [=] () {
-    QString fileName = QFileDialog::getOpenFileName(
-        this, tr("Open File"),
-        "./",
-        tr("Fractal (*.frac)")
-    );
+    QString fileName = QFileDialog::getOpenFileName(this, "Open File", "./", "Fractal (*.frac)");
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly)) {
-      QMessageBox::information(this, tr("Unable to open file"),
-                               file.errorString());
+      QMessageBox::information(this, tr("Unable to open file"), file.errorString());
       return;
     }
     QDataStream in(&file);
@@ -76,15 +71,10 @@ QWidget* FractalWindow::createSettings() {
   });
   menu->addSeparator();
   connect(menu->addAction("Fraktal exportieren"), &QAction::triggered, [=] () {
-    QString fileName = QFileDialog::getSaveFileName(
-        this, tr("Save File"),
-        "./fractal.frac",
-        tr("Fractal (*.frac)")
-    );
+    QString fileName = QFileDialog::getSaveFileName(this, "Save File", "./fractal.frac", "Fractal (*.frac)");
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly|QFile::Truncate)) {
-      QMessageBox::information(this, tr("Unable to open file"),
-                               file.errorString());
+      QMessageBox::information(this, tr("Unable to open file"), file.errorString());
       return;
     }
     QDataStream out(&file);
@@ -92,11 +82,7 @@ QWidget* FractalWindow::createSettings() {
     out << fractals->currentData().value<unsigned>() << *currentFractal;
   });
   connect(menu->addAction("Als Bild exportieren"), &QAction::triggered, [this] () {
-    QString fileName = QFileDialog::getSaveFileName(
-        this, tr("Save File"),
-        "./fractal.png",
-        tr("Images (*.png *.xpm *.jpg)")
-    );
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "./fractal.png", "Images (*.png *.xpm *.jpg)");
     if(fileName.isEmpty()) {
       return;
     }
@@ -107,7 +93,10 @@ QWidget* FractalWindow::createSettings() {
   buttons->addItem(new QSpacerItem(200, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
   QPushButton* info = new QPushButton("About");
   connect(info, &QPushButton::clicked, [this] () {
-    QMessageBox::about(this, "About", "ABOUT PAGE...");
+    QFile about(":/about");
+    about.open(QIODevice::ReadOnly | QIODevice::Text);
+    QMessageBox aboutBox(QMessageBox::NoIcon, "About", about.readAll(), QMessageBox::Close | QMessageBox::Help, nullptr, Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint | Qt::FramelessWindowHint);
+    aboutBox.exec();
   });
   buttons->addWidget(info);
   formLayout->addRow(buttons);
