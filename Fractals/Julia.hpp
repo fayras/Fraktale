@@ -16,11 +16,9 @@ class Julia : public Mandelbrot {
 
     void createWorkers();
 
-  private:
     double rPart;
     double iPart;
-    QRectF bounds;
-    std::vector<JuliaRenderTask*> workers;
+    std::vector<std::unique_ptr<JuliaRenderTask>> workers;
 };
 
 

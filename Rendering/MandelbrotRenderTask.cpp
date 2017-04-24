@@ -2,8 +2,10 @@
 #include "../Fractals/FractalPixelIteration.hpp"
 #include <QDebug>
 
-double map(double n, double start1, double stop1, double start2, double stop2) {
-  return ((n-start1)/(stop1-start1))*(stop2-start2)+start2;
+namespace MandelbrotRender {
+  double map(double n, double start1, double stop1, double start2, double stop2) {
+    return ((n-start1)/(stop1-start1))*(stop2-start2)+start2;
+  }
 }
 
 MandelbrotRenderTask::MandelbrotRenderTask(QObject *parent)
@@ -21,9 +23,9 @@ void MandelbrotRenderTask::run() {
     std::vector<FractalPixelIteration> pixelIterations;
     double passMaxIt = maxIterations / pass;
     for(int w = rect.left(); w < rect.right(); w += pass) {
-      double x0 = map(w, rect.left(), rect.right(), fractalBounds.left(), fractalBounds.right());
+      double x0 = MandelbrotRender::map(w, rect.left(), rect.right(), fractalBounds.left(), fractalBounds.right());
       for(int h = rect.top(); h < rect.bottom(); h += pass) {
-        double y0 = map(h, rect.top(), rect.bottom(), fractalBounds.top(), fractalBounds.bottom());
+        double y0 = MandelbrotRender::map(h, rect.top(), rect.bottom(), fractalBounds.top(), fractalBounds.bottom());
         double x = 0;
         double y = 0;
         int iterations = 0;

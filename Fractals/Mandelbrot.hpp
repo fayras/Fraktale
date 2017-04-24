@@ -3,9 +3,9 @@
 
 #include "Fractal.hpp"
 #include "FractalPixelIteration.hpp"
+#include "../Rendering/MandelbrotRenderTask.hpp"
 #include <vector>
 
-class MandelbrotRenderTask;
 
 class Mandelbrot : public Fractal {
     Q_OBJECT
@@ -25,7 +25,7 @@ class Mandelbrot : public Fractal {
     virtual void createWorkers();
 
     QRectF bounds;
-    std::vector<MandelbrotRenderTask*> workers;
+    std::vector<std::unique_ptr<MandelbrotRenderTask>> workers;
 };
 
 #endif //FRAKTALE_MANDELBROT_HPP

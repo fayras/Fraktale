@@ -78,7 +78,7 @@ QDataStream &Mandelbrot::read(QDataStream &os) {
 
 void Mandelbrot::createWorkers() {
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
-    workers.push_back(new MandelbrotRenderTask(this));
-    connect(workers[i], &MandelbrotRenderTask::rendered, this, &Mandelbrot::updatePixels);
+    workers.push_back(std::unique_ptr<MandelbrotRenderTask>(new MandelbrotRenderTask(this)));
+    connect(workers[i].get(), &MandelbrotRenderTask::rendered, this, &Mandelbrot::updatePixels);
   };
 }

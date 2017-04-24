@@ -2,6 +2,12 @@
 #include "../Fractals/FractalPixelIteration.hpp"
 #include <QDebug>
 
+namespace JuliaRender {
+  double map(double n, double start1, double stop1, double start2, double stop2) {
+    return ((n-start1)/(stop1-start1))*(stop2-start2)+start2;
+  }
+}
+
 JuliaRenderTask::JuliaRenderTask(QObject *parent)
     : QThread(parent), restart(false), maxIterations(100), rect(), fractalBounds()
 {}
@@ -12,14 +18,13 @@ JuliaRenderTask::~JuliaRenderTask() {
 }
 
 void JuliaRenderTask::run() {
-  qDebug() << "julia task";
   for(int pass = 8; pass > 0; pass = pass >> 1) {
     std::vector<FractalPixelIteration> pixelIterations;
     double passMaxIt = maxIterations / pass;
     for(int w = rect.left(); w < rect.right(); w += pass) {
       for(int h = rect.top(); h < rect.bottom(); h += pass) {
-        double x = 0;
-        double y = 0;
+        double x = JuliaRender::map(w, rect.left(), rect.right(), fractalBounds.left(), fractalBounds.right());
+        double y = JuliaRender::map(h, rect.top(), rect.bottom(), fractalBounds.top(), fractalBounds.bottom());
         int iterations = 0;
         while(x*x + y*y < 4 && iterations < passMaxIt) {
           if(restart) {

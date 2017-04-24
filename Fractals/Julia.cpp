@@ -2,9 +2,10 @@
 #include "../Rendering/JuliaRenderTask.hpp"
 
 Julia::Julia(int width, int height)
-    : Mandelbrot(width, height), rPart(0), iPart(0)
+    : Mandelbrot(width, height), rPart(-0.8), iPart(0.156)
 {
-  workers.clear();
+  bounds.setRect(-2, -1.5, 4, 3);
+  Mandelbrot::workers.clear();
   createWorkers();
 }
 
@@ -20,8 +21,8 @@ QDataStream &Julia::read(QDataStream &os) {
 
 void Julia::createWorkers() {
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
-    workers.push_back(new JuliaRenderTask(this));
-    connect(workers[i], &JuliaRenderTask::rendered, this, &Julia::updatePixels);
+    workers.push_back(std::unique_ptr<JuliaRenderTask>(new JuliaRenderTask(this)));
+    connect(workers[i].get(), &JuliaRenderTask::rendered, this, &Julia::updatePixels);
   };
 }
 
