@@ -35,7 +35,7 @@ std::map<QString, QWidget*> Fractal::getSettings() {
   });
 
   QSpinBox* iter = new QSpinBox;
-  iter->setRange(10, 5000);
+  iter->setRange(1, 5000);
   iter->setValue(maxIterations);
   map.insert(std::pair<QString, QWidget*>("Iterationen", iter));
   connect(iter, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &Fractal::setMaxIterations);

@@ -24,7 +24,7 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Gui REQUIRED)
 
-set(SOURCE_FILES main.cpp FractalWindow.cpp FractalWindow.hpp Fractals/Fractal.cpp Fractals/Fractal.hpp Fractals/Mandelbrot.cpp Fractals/Mandelbrot.hpp Canvas.cpp Canvas.hpp Rendering/MandelbrotRenderTask.cpp Rendering/MandelbrotRenderTask.hpp Fractals/EmptyFractal.cpp Fractals/EmptyFractal.hpp ColorModes/ColorMode.cpp ColorModes/ColorMode.hpp ColorModes/WaveLengthMode.cpp ColorModes/WaveLengthMode.hpp Fractals/Identifiers.hpp ColorModes/Grayscale.cpp ColorModes/Grayscale.hpp ColorModes/Identifiers.hpp ColorModes/SmoothGradient.cpp ColorModes/SmoothGradient.hpp Fractals/FractalPixelIteration.hpp)
+set(SOURCE_FILES main.cpp FractalWindow.cpp FractalWindow.hpp Fractals/Fractal.cpp Fractals/Fractal.hpp Fractals/Mandelbrot.cpp Fractals/Mandelbrot.hpp Canvas.cpp Canvas.hpp Rendering/MandelbrotRenderTask.cpp Rendering/MandelbrotRenderTask.hpp Fractals/EmptyFractal.cpp Fractals/EmptyFractal.hpp ColorModes/ColorMode.cpp ColorModes/ColorMode.hpp ColorModes/WaveLengthMode.cpp ColorModes/WaveLengthMode.hpp Fractals/Identifiers.hpp ColorModes/Grayscale.cpp ColorModes/Grayscale.hpp ColorModes/Identifiers.hpp ColorModes/SmoothGradient.cpp ColorModes/SmoothGradient.hpp Fractals/FractalPixelIteration.hpp Fractals/Julia.cpp Fractals/Julia.hpp Rendering/JuliaRenderTask.cpp Rendering/JuliaRenderTask.hpp Fractals/KochCurve.cpp Fractals/KochCurve.hpp)
 add_executable(Fraktale ${SOURCE_FILES} assets/resources.qrc)
 
 # Use the modules from Qt 5.

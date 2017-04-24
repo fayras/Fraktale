@@ -22,8 +22,8 @@ class Mandelbrot : public Fractal {
   protected:
     QDataStream &print(QDataStream &os) const override;
     QDataStream &read(QDataStream &os) override;
+    virtual void createWorkers();
 
-  private:
     QRectF bounds;
     std::vector<MandelbrotRenderTask*> workers;
 };

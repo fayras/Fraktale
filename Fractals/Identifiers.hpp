@@ -4,7 +4,9 @@
 namespace Fractals {
   enum ID : unsigned {
     EMPTY_FRACTAL,
-    MANDELBROT
+    MANDELBROT,
+    JULIA,
+    KOCH_CURVE
   };
 }
 

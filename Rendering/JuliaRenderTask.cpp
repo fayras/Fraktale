@@ -1,29 +1,23 @@
-#include "MandelbrotRenderTask.hpp"
+#include "JuliaRenderTask.hpp"
 #include "../Fractals/FractalPixelIteration.hpp"
 #include <QDebug>
 
-double map(double n, double start1, double stop1, double start2, double stop2) {
-  return ((n-start1)/(stop1-start1))*(stop2-start2)+start2;
-}
-
-MandelbrotRenderTask::MandelbrotRenderTask(QObject *parent)
-  : QThread(parent), restart(false), maxIterations(100), rect(), fractalBounds()
+JuliaRenderTask::JuliaRenderTask(QObject *parent)
+    : QThread(parent), restart(false), maxIterations(100), rect(), fractalBounds()
 {}
 
-MandelbrotRenderTask::~MandelbrotRenderTask() {
+JuliaRenderTask::~JuliaRenderTask() {
   restart = true;
   wait();
 }
 
-void MandelbrotRenderTask::run() {
-  qDebug() << "mandelrot task";
+void JuliaRenderTask::run() {
+  qDebug() << "julia task";
   for(int pass = 8; pass > 0; pass = pass >> 1) {
     std::vector<FractalPixelIteration> pixelIterations;
     double passMaxIt = maxIterations / pass;
     for(int w = rect.left(); w < rect.right(); w += pass) {
-      double x0 = map(w, rect.left(), rect.right(), fractalBounds.left(), fractalBounds.right());
       for(int h = rect.top(); h < rect.bottom(); h += pass) {
-        double y0 = map(h, rect.top(), rect.bottom(), fractalBounds.top(), fractalBounds.bottom());
         double x = 0;
         double y = 0;
         int iterations = 0;
@@ -31,9 +25,9 @@ void MandelbrotRenderTask::run() {
           if(restart) {
             return;
           }
-          double xtemp = x*x - y*y + x0;
+          double xtemp = x*x - y*y + rPart;
           double prod = x*y;
-          y = prod + prod + y0;
+          y = prod + prod + iPart;
           x = xtemp;
           iterations++;
         }
@@ -49,10 +43,12 @@ void MandelbrotRenderTask::run() {
   }
 }
 
-void MandelbrotRenderTask::render(QRect pRect, QRectF pBounds, int pMaxIterations) {
+void JuliaRenderTask::render(QRect pRect, QRectF pBounds, int pMaxIterations, double rP, double iP) {
   rect = pRect;
   fractalBounds = pBounds;
   maxIterations = pMaxIterations;
+  rPart = rP;
+  iPart = iP;
   restart = true;
   wait();
   restart = false;

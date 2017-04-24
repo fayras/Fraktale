@@ -10,10 +10,7 @@ Mandelbrot::Mandelbrot(int width, int height)
   : Fractal(width, height), bounds(-2.5, -1, 3.5, 2)
 {
   qRegisterMetaType<std::vector<FractalPixelIteration> >();
-  for(int i = 0; i < QThread::idealThreadCount(); i++) {
-    workers.push_back(new MandelbrotRenderTask(this));
-    connect(workers[i], &MandelbrotRenderTask::rendered, this, &Mandelbrot::updatePixels);
-  };
+  createWorkers();
   registerColorMode<Grayscale>(Colors::ID::GRAYSCALE);
   registerColorMode<WaveLengthMode>(Colors::ID::WAVELENGTH, false);
   registerColorMode<WaveLengthMode>(Colors::ID::SMOOTH_WAVELENGTH, true);
@@ -77,4 +74,11 @@ QDataStream &Mandelbrot::read(QDataStream &os) {
   os >> maxIterations >> bounds;
   update();
   return os;
+}
+
+void Mandelbrot::createWorkers() {
+  for(int i = 0; i < QThread::idealThreadCount(); i++) {
+    workers.push_back(new MandelbrotRenderTask(this));
+    connect(workers[i], &MandelbrotRenderTask::rendered, this, &Mandelbrot::updatePixels);
+  };
 }

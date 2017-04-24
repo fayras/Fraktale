@@ -12,6 +12,8 @@
 #include "Fractals/Identifiers.hpp"
 #include "Fractals/Mandelbrot.hpp"
 #include "Fractals/EmptyFractal.hpp"
+#include "Fractals/Julia.hpp"
+#include "Fractals/KochCurve.hpp"
 
 FractalWindow::FractalWindow(QWidget *parent)
   : QDialog(parent), isDragging(false), currentFractal(new EmptyFractal())
@@ -44,6 +46,12 @@ QWidget* FractalWindow::createSettings() {
 
   fractals->addItem("Mandelbrot", QVariant::fromValue(Fractals::ID::MANDELBROT));
   registerFractal<Mandelbrot>(Fractals::ID::MANDELBROT);
+
+  fractals->addItem("Julia", QVariant::fromValue(Fractals::ID::JULIA));
+  registerFractal<Julia>(Fractals::ID::JULIA);
+
+  fractals->addItem("Koch-Kurve", QVariant::fromValue(Fractals::ID::KOCH_CURVE));
+  registerFractal<KochCurve>(Fractals::ID::KOCH_CURVE);
 
   formLayout->addRow("Fraktal", fractals);
   connect(fractals, &QComboBox::currentTextChanged, [=](const QString& text) {
@@ -89,13 +97,13 @@ QWidget* FractalWindow::createSettings() {
     this->currentFractal->getImage().save(fileName);
   });
   btExport->setMenu(menu);
-  buttons->addWidget(btExport);
   buttons->addItem(new QSpacerItem(200, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
+  buttons->addWidget(btExport);
   QPushButton* info = new QPushButton("About");
   connect(info, &QPushButton::clicked, [this] () {
     QFile about(":/about");
     about.open(QIODevice::ReadOnly | QIODevice::Text);
-    QMessageBox aboutBox(QMessageBox::NoIcon, "About", about.readAll(), QMessageBox::Close | QMessageBox::Help, nullptr, Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint | Qt::FramelessWindowHint);
+    QMessageBox aboutBox(QMessageBox::NoIcon, "About", about.readAll(), QMessageBox::Close, nullptr, Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint | Qt::FramelessWindowHint);
     aboutBox.exec();
   });
   buttons->addWidget(info);
