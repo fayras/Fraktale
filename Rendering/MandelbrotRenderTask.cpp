@@ -1,6 +1,5 @@
 #include "MandelbrotRenderTask.hpp"
 #include "../Fractals/FractalPixelIteration.hpp"
-#include <QDebug>
 
 namespace MandelbrotRender {
   double map(double n, double start1, double stop1, double start2, double stop2) {
@@ -18,7 +17,6 @@ MandelbrotRenderTask::~MandelbrotRenderTask() {
 }
 
 void MandelbrotRenderTask::run() {
-  qDebug() << "mandelrot task";
   for(int pass = 8; pass > 0; pass = pass >> 1) {
     std::vector<FractalPixelIteration> pixelIterations;
     double passMaxIt = maxIterations / pass;
