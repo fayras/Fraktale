@@ -6,12 +6,17 @@
 #include <cmath>
 #include <vector>
 
+class KochCurveRenderTask;
+
 const double H = 1.0 / 3.0;
 
 class KochCurve : public Fractal {
-  private:
+  public slots:
+    void updatePixels(std::vector<QPointF> points);
+
+  public:
     struct KochLine {
-      KochLine(QPointF start, QPointF end) : start(start), end(end) {
+      KochLine(QPointF start = QPointF(), QPointF end = QPointF()) : start(start), end(end) {
         diff = QPointF(end.x() - start.x(), -1 * (end.y() - start.y()));
       }
 
@@ -41,6 +46,7 @@ class KochCurve : public Fractal {
     QPointF _offset;
     double _scale;
     std::vector<QPointF> points;
+    std::vector<std::unique_ptr<KochCurveRenderTask>> workers;
 };
 
 
