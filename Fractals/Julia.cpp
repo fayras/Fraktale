@@ -4,7 +4,7 @@
 #include <QtGui/QPainter>
 
 Julia::Julia(int width, int height)
-    : Mandelbrot(width, height), rPart(-0.8), iPart(0.156)
+    : Mandelbrot(width, height), rPart(-0.8), iPart(0.16)
 {
   bounds.setRect(-2, -1.5, 4, 3);
   Mandelbrot::workers.clear();
@@ -54,6 +54,7 @@ std::map<QString, QWidget*> Julia::getSettings() {
 	realPartSlider->setMinimum(-250);
 	realPartSlider->setMaximum(100);
 	realPartSlider->setSingleStep(1);
+  realPartSlider->setValue(-80);
 	settings.insert(std::pair<QString, QWidget*>("Reeller Teil", realPartSlider));
 	connect(realPartSlider, &QSlider::valueChanged, [=](const int value){
 		rPart = (double) value / 100.0;
@@ -65,6 +66,7 @@ std::map<QString, QWidget*> Julia::getSettings() {
 	imgPartSlider->setMinimum(-100);
 	imgPartSlider->setMaximum(100);
 	imgPartSlider->setSingleStep(1);
+  imgPartSlider->setValue(16);
 	settings.insert(std::pair<QString, QWidget*>("ZImaginärer Teil", imgPartSlider));
 	connect(imgPartSlider, &QSlider::valueChanged, [=](const int value){
 		iPart = (double) value / 100.0;
