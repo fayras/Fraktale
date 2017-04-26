@@ -2,6 +2,7 @@
 #include "../Rendering/KochCurveRenderTask.hpp"
 #include <QPainter>
 #include <QDebug>
+#include <QtWidgets/QSpinBox>
 
 KochCurve::KochCurve(int width, int height)
     : Fractal(width, height), _scale(1), _offset()
@@ -66,4 +67,15 @@ void KochCurve::updatePixels(std::vector<QPointF> points) {
     painter.drawLine(a, b);
   }
   emit drawSignal();
+}
+
+std::map<QString, QWidget *> KochCurve::getSettings() {
+  std::map<QString, QWidget *> map;
+
+  QSpinBox* iter = new QSpinBox;
+  iter->setRange(1, 5000);
+  iter->setValue(maxIterations);
+  map.insert(std::pair<QString, QWidget*>("Iterationen", iter));
+  connect(iter, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &Fractal::setMaxIterations);
+  return map;
 }

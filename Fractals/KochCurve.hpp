@@ -39,6 +39,7 @@ class KochCurve : public Fractal {
     void update() override;
     void translate(QPointF offset) override;
     void scale(double factor) override;
+    std::map<QString, QWidget *> getSettings() override;
 
   private:
     void curve(int depth, KochLine line);
