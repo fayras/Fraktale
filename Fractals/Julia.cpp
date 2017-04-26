@@ -1,5 +1,6 @@
 #include "Julia.hpp"
 #include "../Rendering/JuliaRenderTask.hpp"
+#include <QSlider>
 
 Julia::Julia(int width, int height)
     : Mandelbrot(width, height), rPart(-0.8), iPart(0.156)
@@ -42,4 +43,32 @@ void Julia::update() {
     );
     workers[i]->render(rect, tempBounds, maxIterations, rPart, iPart);
   }
+}
+
+std::map<QString, QWidget*> Julia::getSettings() {
+	std::map<QString, QWidget*> settings = Fractal::getSettings();
+
+	QSlider* realPartSlider = new QSlider(Qt::Horizontal);
+	realPartSlider->setFocusPolicy(Qt::StrongFocus);
+	realPartSlider->setMinimum(-250);
+	realPartSlider->setMaximum(100);
+	realPartSlider->setSingleStep(1);
+	settings.insert(std::pair<QString, QWidget*>("Reeller Teil", realPartSlider));
+	connect(realPartSlider, &QSlider::valueChanged, [=](const int value){
+		rPart = (double) value / 100.0;
+		update();
+	});
+
+	QSlider* imgPartSlider = new QSlider(Qt::Horizontal);
+	imgPartSlider->setFocusPolicy(Qt::StrongFocus);
+	imgPartSlider->setMinimum(-100);
+	imgPartSlider->setMaximum(100);
+	imgPartSlider->setSingleStep(1);
+	settings.insert(std::pair<QString, QWidget*>("ZImaginärer Teil", imgPartSlider));
+	connect(imgPartSlider, &QSlider::valueChanged, [=](const int value){
+		iPart = (double) value / 100.0;
+		update();
+	});
+
+	return settings;
 }
