@@ -1,6 +1,7 @@
 #include "Julia.hpp"
 #include "../Rendering/JuliaRenderTask.hpp"
 #include <QSlider>
+#include <QtGui/QPainter>
 
 Julia::Julia(int width, int height)
     : Mandelbrot(width, height), rPart(-0.8), iPart(0.156)
@@ -71,4 +72,20 @@ std::map<QString, QWidget*> Julia::getSettings() {
 	});
 
 	return settings;
+}
+
+void Julia::draw(Canvas &target) {
+	Fractal::draw(target);
+
+  QPainter painter(&image);
+
+	QString text = "Reeller Teil: " + QString::number(rPart) + ", Imaginärer Teil: " + QString::number(iPart);
+	QFontMetrics metrics = painter.fontMetrics();
+	int textWidth = metrics.width(text);
+
+	painter.setPen(Qt::NoPen);
+	painter.setBrush(QColor(0, 0, 0, 127));
+	painter.drawRect((image.width() - textWidth) - 10, 0, textWidth + 10, metrics.lineSpacing() + 5);
+	painter.setPen(Qt::white);
+	painter.drawText(image.width() - textWidth - 5, metrics.leading() + metrics.ascent(), text);
 }

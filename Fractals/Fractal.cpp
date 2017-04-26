@@ -61,6 +61,7 @@ void Fractal::translate(QPointF offset) {
 
   image.fill(Qt::black);
   painter.drawImage(offset, traslated);
+  painter.end();
 
   emit drawSignal();
 }
@@ -74,6 +75,7 @@ void Fractal::scale(double factor) {
   painter.scale(factor, factor);
   painter.translate(-image.width() / 2, -image.height() / 2);
   painter.drawImage(0, 0, scaled);
+  painter.end();
 
   emit drawSignal();
 }

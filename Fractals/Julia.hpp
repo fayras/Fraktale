@@ -9,6 +9,7 @@ class Julia : public Mandelbrot {
   public:
     Julia(int width, int height);
     void update() override;
+    void draw(Canvas &target) override;
     virtual std::map<QString, QWidget*> getSettings();
 
   protected:
