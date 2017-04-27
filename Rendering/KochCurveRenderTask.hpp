@@ -48,15 +48,15 @@ class KochCurveRenderTask : public QThread  {
      *                       Breite und die Höhe des Bereichs darstellen.
      * @param pMaxIterations Die maximale Anzahl von Iterationen pro Pixel.
      */
-    void render(int depth, KochCurve::KochLine line);
+    void render(int depth, KochCurve::Line line);
 
   private:
-    void calculateCurve(int depth, KochCurve::KochLine line, std::vector<QPointF>& points);
+    void calculateCurve(int depth, KochCurve::Line line, std::vector<QPointF>& points);
 
   private:
     int maxIterations;
     bool restart;
-    KochCurve::KochLine firstLine;
+    KochCurve::Line firstLine;
 };
 
 

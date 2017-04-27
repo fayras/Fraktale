@@ -18,15 +18,15 @@ KochCurve::KochCurve(int width, int height)
 void KochCurve::update() {
   image.fill(Qt::white);
   points.clear();
-  KochLine line1(QPointF(0.15, 0.7), QPointF(0.5, 0.01));
-  KochLine line2(QPointF(0.5, 0.01), QPointF(0.85, 0.7));
-  KochLine line3(QPointF(0.85, 0.7), QPointF(0.15, 0.7));
+  Line line1(QPointF(0.15, 0.7), QPointF(0.5, 0.01));
+  Line line2(QPointF(0.5, 0.01), QPointF(0.85, 0.7));
+  Line line3(QPointF(0.85, 0.7), QPointF(0.15, 0.7));
   workers[0]->render(maxIterations, line1);
   workers[1]->render(maxIterations, line2);
   workers[2]->render(maxIterations, line3);
 }
 
-void KochCurve::curve(int depth, KochLine line) {
+void KochCurve::curve(int depth, Line line) {
   if(depth <= 0) {
     points.push_back(line.start);
     points.push_back(line.end);
@@ -34,10 +34,10 @@ void KochCurve::curve(int depth, KochLine line) {
     QPointF p2 = line.point2();
     QPointF p3 = line.point3();
     QPointF p4 = line.point4();
-    curve(depth - 1, KochLine(line.start, p2));
-    curve(depth - 1, KochLine(p2, p3));
-    curve(depth - 1, KochLine(p3, p4));
-    curve(depth - 1, KochLine(p4, line.end));
+    curve(depth - 1, Line(line.start, p2));
+    curve(depth - 1, Line(p2, p3));
+    curve(depth - 1, Line(p3, p4));
+    curve(depth - 1, Line(p4, line.end));
   }
 }
 

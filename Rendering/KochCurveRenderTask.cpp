@@ -16,7 +16,7 @@ void KochCurveRenderTask::run() {
   emit rendered(points);
 }
 
-void KochCurveRenderTask::render(int pDepth, KochCurve::KochLine pLine) {
+void KochCurveRenderTask::render(int pDepth, KochCurve::Line pLine) {
   firstLine = pLine;
   maxIterations = pDepth;
   restart = true;
@@ -25,7 +25,7 @@ void KochCurveRenderTask::render(int pDepth, KochCurve::KochLine pLine) {
   start();
 }
 
-void KochCurveRenderTask::calculateCurve(int depth, KochCurve::KochLine line, std::vector<QPointF>& points) {
+void KochCurveRenderTask::calculateCurve(int depth, KochCurve::Line line, std::vector<QPointF>& points) {
   if(restart) {
     return;
   }
@@ -37,9 +37,9 @@ void KochCurveRenderTask::calculateCurve(int depth, KochCurve::KochLine line, st
     QPointF p2 = line.point2();
     QPointF p3 = line.point3();
     QPointF p4 = line.point4();
-    calculateCurve(depth - 1, KochCurve::KochLine(line.start, p2), points);
-    calculateCurve(depth - 1, KochCurve::KochLine(p2, p3), points);
-    calculateCurve(depth - 1, KochCurve::KochLine(p3, p4), points);
-    calculateCurve(depth - 1, KochCurve::KochLine(p4, line.end), points);
+    calculateCurve(depth - 1, KochCurve::Line(line.start, p2), points);
+    calculateCurve(depth - 1, KochCurve::Line(p2, p3), points);
+    calculateCurve(depth - 1, KochCurve::Line(p3, p4), points);
+    calculateCurve(depth - 1, KochCurve::Line(p4, line.end), points);
   }
 }

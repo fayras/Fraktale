@@ -15,8 +15,8 @@ class KochCurve : public Fractal {
     void updatePixels(std::vector<QPointF> points);
 
   public:
-    struct KochLine {
-      KochLine(QPointF start = QPointF(), QPointF end = QPointF()) : start(start), end(end) {
+    struct Line {
+      Line(QPointF start = QPointF(), QPointF end = QPointF()) : start(start), end(end) {
         diff = QPointF(end.x() - start.x(), -1 * (end.y() - start.y()));
       }
 
@@ -46,7 +46,7 @@ class KochCurve : public Fractal {
     QDataStream &read(QDataStream &os) override;
 
   private:
-    void curve(int depth, KochLine line);
+    void curve(int depth, Line line);
 
     QPointF _offset;
     double _scale;
