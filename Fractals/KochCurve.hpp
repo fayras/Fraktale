@@ -41,6 +41,10 @@ class KochCurve : public Fractal {
     void scale(double factor) override;
     std::map<QString, QWidget *> getSettings() override;
 
+  protected:
+    QDataStream &print(QDataStream &os) const override;
+    QDataStream &read(QDataStream &os) override;
+
   private:
     void curve(int depth, KochLine line);
 

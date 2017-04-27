@@ -79,3 +79,13 @@ std::map<QString, QWidget *> KochCurve::getSettings() {
   connect(iter, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &Fractal::setMaxIterations);
   return map;
 }
+
+QDataStream &KochCurve::print(QDataStream &os) const {
+  return os << maxIterations << _offset << _scale;
+}
+
+QDataStream &KochCurve::read(QDataStream &os) {
+  os >> maxIterations >> _offset >> _scale;
+  update();
+  return os;
+}
