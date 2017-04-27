@@ -2,16 +2,24 @@
 
 Programm, mit dem Fraktale gezeichnet werden können.
 
-### Build
+Zur Zeit gibt es drei Fraktale zum Anschauen:
+- Koch Schneeflocke
+- Mandelbrot-Menge
+- Julia-Menge
 
-Zum Erstellen des Programms muss in der Datei 'CMakeLists.txt'
-die Zeile `set (CMAKE_PREFIX_PATH "../Qt/5.8/gcc_64/lib/cmake")`
-angepasst werden, so dass der Pfad zur Qt-Bibliothek angegeben wird.
+Für weitere Hilfe zur Navigation und Benutzerfläche bitte die im Programm 
+angefügte Hilfe einsehen.
 
-Danach kann das Programm mit folgenden Befehlen erstellt werden.
+### Das Programm erstellen
+
+Das Programm mit folgenden Befehlen erstellt werden:
 ```
 mkdir build
 cd build
 cmake ../
 make
 ```
+
+Sollte sich die Qt-Bibliothek nicht in einem Standard-Pfad befinden, 
+kann mit dem cmake-Parameter  -DCMAKE_PREFIX_PATH="pfad/zu/qt/lib/cmake" 
+der Pfad zur Qt-Biblothek angegeben werden.
