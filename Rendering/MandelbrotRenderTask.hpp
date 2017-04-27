@@ -7,12 +7,17 @@
 struct FractalPixelIteration;
 
 /**
- * Rendert einzelne Pixel der Mandelbrot-Menge in einem Thread.
+ * Berechnet einzelne Pixel der Mandelbrot-Menge in einem Thread.
  */
 class MandelbrotRenderTask : public QThread {
     Q_OBJECT
 
   public:
+    /**
+     * Ezeugt eine neue Instanz des MandelbrotRenderTasks.
+     *
+     * @param parent Das Objekt, welches den Besitz des Tasks übernimmt.
+     */
     MandelbrotRenderTask(QObject *parent = 0);
     ~MandelbrotRenderTask();
 

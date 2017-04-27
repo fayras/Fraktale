@@ -6,10 +6,18 @@
 
 struct FractalPixelIteration;
 
+/**
+ * Berechnet einzelne Pixel der Mandelbrot-Menge in einem Thread.
+ */
 class JuliaRenderTask : public QThread {
     Q_OBJECT
 
   public:
+    /**
+     * Ezeugt eine neue Instanz des JuliaRenderTasks.
+     *
+     * @param parent Das Objekt, welches den Besitz des Tasks übernimmt.
+     */
     JuliaRenderTask(QObject *parent = 0);
     ~JuliaRenderTask();
 

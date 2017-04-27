@@ -4,10 +4,18 @@
 #include <QThread>
 #include "../Fractals/KochCurve.hpp"
 
+/**
+ * Berechnet die einzelnen Punkte der Koch-Schneeflocke in einem Thread.
+ */
 class KochCurveRenderTask : public QThread  {
   Q_OBJECT
 
   public:
+    /**
+     * Ezeugt eine neue Instanz des KochCurveRenderTasks.
+     *
+     * @param parent Das Objekt, welches den Besitz des Tasks übernimmt.
+     */
     KochCurveRenderTask(QObject *parent = 0);
     ~KochCurveRenderTask();
 
