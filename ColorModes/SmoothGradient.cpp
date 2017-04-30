@@ -24,10 +24,6 @@ QRgb SmoothGradient::getColor(FractalPixelIteration& it) const {
   if(it.iterations == -1) {
     return inSetColor;
   }
-  //double index = (double) (it.iterations % ColormapSize) / ColormapSize;
-  //QColor color = gradient.keyValueAt(index).value<QColor>();
-  //qDebug() << gradient.keyValueAt(index);
-  //return color.rgb();
   double log_zn = std::log( it.xValue * it.xValue + it.yValue * it.yValue ) / 2;
   double nu = std::log( log_zn / std::log(2) ) / std::log(2);
   double iteration = it.iterations + 1 - nu;

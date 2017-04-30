@@ -3,6 +3,9 @@
 
 #include "ColorMode.hpp"
 
+/**
+ * Farbgebung für Graustufen.
+ */
 class Grayscale : public ColorMode {
   public:
     Grayscale();
