@@ -55,11 +55,12 @@ void KochCurve::scale(double factor) {
 
 void KochCurve::updatePixels(std::vector<QPointF> points) {
   QPainter painter(&image);
-  painter.setRenderHint(QPainter::Antialiasing);
+  //painter.setRenderHint(QPainter::Antialiasing);
   painter.translate(image.width() / 2, image.height() / 2);
   painter.scale(_scale, _scale);
   painter.translate(-image.width() / 2, -image.height() / 2);
   painter.translate(_offset);
+  painter.setClipRect(0, 0, image.width(), image.height());
   painter.setPen(QPen(Qt::black, 0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
   for(int i = 1; i < points.size(); i += 2) {
     QPointF a(points[i - 1].x() * image.width(), points[i - 1].y() * image.height());

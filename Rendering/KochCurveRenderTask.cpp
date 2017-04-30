@@ -2,7 +2,7 @@
 #include <QDebug>
 
 KochCurveRenderTask::KochCurveRenderTask(QObject *parent)
-    : QThread(parent), restart(false), maxIterations(5), firstLine()
+    : QThread(parent), restart(false), maxIterations(5), firstLine(), rect(0, 0, 1, 1)
 {}
 
 KochCurveRenderTask::~KochCurveRenderTask() {
@@ -26,7 +26,7 @@ void KochCurveRenderTask::render(int pDepth, KochCurve::Line pLine) {
 }
 
 void KochCurveRenderTask::calculateCurve(int depth, KochCurve::Line line, std::vector<QPointF>& points) {
-  if(restart) {
+  if(restart || (!rect.contains(line.start) && !rect.contains(line.end))) {
     return;
   }
 

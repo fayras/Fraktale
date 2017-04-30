@@ -56,6 +56,7 @@ class KochCurveRenderTask : public QThread  {
   private:
     int maxIterations;
     bool restart;
+    QRectF rect;
     KochCurve::Line firstLine;
 };
 
