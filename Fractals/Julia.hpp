@@ -9,6 +9,26 @@ class JuliaRenderTask;
  * Representiert die Julia-Menge.
  */
 class Julia : public Mandelbrot {
+    Q_OBJECT
+
+  signals:
+    /**
+     * Signal:
+     * Wird ausgelöst, wenn sich der reelle Part ändert.
+     *
+     * @signal
+     * @param rP Der reelle Part des Fraktals.
+     */
+    void rPartChanged(double rP);
+    /**
+     * Signal:
+     * Wird ausgelöst, wenn sich der imaginäre Part ändert.
+     *
+     * @signal
+     * @param rP Der imaginäre Part des Fraktals.
+     */
+    void iPartChanged(double iP);
+
   public:
     /**
      * Erzeugt eine neue Instanz des Julia-Fraktals.

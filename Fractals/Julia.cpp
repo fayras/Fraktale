@@ -12,11 +12,17 @@ Julia::Julia(int width, int height)
 }
 
 QDataStream &Julia::print(QDataStream &os) const {
-  return Mandelbrot::print(os) << rPart << iPart;
+  os << maxIterations << static_cast<unsigned>(colormapID) << bounds << rPart << iPart;
+	return os;
 }
 
 QDataStream &Julia::read(QDataStream &os) {
-  Mandelbrot::print(os) >> rPart >> iPart;
+  unsigned colorID;
+  os >> maxIterations >> colorID >> bounds >> rPart >> iPart;
+  setColorMode(static_cast<Colors::ID>(colorID));
+  emit iterationsChanged(maxIterations);
+  emit rPartChanged(rPart);
+  emit iPartChanged(iPart);
   update();
   return os;
 }
@@ -55,11 +61,14 @@ std::map<QString, QWidget*> Julia::getSettings() {
 	realPartSlider->setMaximum(100);
 	realPartSlider->setSingleStep(1);
   realPartSlider->setValue(-80);
-	settings.insert(std::pair<QString, QWidget*>("Reeller Teil", realPartSlider));
-	connect(realPartSlider, &QSlider::valueChanged, [=](const int value){
+	settings.insert(std::pair<QString, QWidget*>("Teil reell", realPartSlider));
+	connect(realPartSlider, &QSlider::valueChanged, [=](const int value) {
 		rPart = (double) value / 100.0;
 		update();
 	});
+  connect(this, &Julia::rPartChanged, [=](const double value) {
+    realPartSlider->setValue((int) (value * 100));
+  });
 
 	QSlider* imgPartSlider = new QSlider(Qt::Horizontal);
 	imgPartSlider->setFocusPolicy(Qt::StrongFocus);
@@ -67,11 +76,14 @@ std::map<QString, QWidget*> Julia::getSettings() {
 	imgPartSlider->setMaximum(100);
 	imgPartSlider->setSingleStep(1);
   imgPartSlider->setValue(16);
-	settings.insert(std::pair<QString, QWidget*>("ZImaginärer Teil", imgPartSlider));
+	settings.insert(std::pair<QString, QWidget*>("Teil imaginär", imgPartSlider));
 	connect(imgPartSlider, &QSlider::valueChanged, [=](const int value){
 		iPart = (double) value / 100.0;
 		update();
 	});
+  connect(this, &Julia::iPartChanged, [=](const double value) {
+    imgPartSlider->setValue((int) (value * 100));
+  });
 
 	return settings;
 }
