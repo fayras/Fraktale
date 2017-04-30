@@ -18,6 +18,8 @@ class Fractal : public QObject {
 
   signals:
     void drawSignal();
+    void iterationsChanged(unsigned it);
+    void colorChanged(Colors::ID id);
 
   public slots:
     void setMaxIterations(unsigned iterations);
@@ -44,6 +46,7 @@ class Fractal : public QObject {
   protected:
     QImage image;
     ColorMode::Ptr colormap;
+    Colors::ID colormapID;
     unsigned maxIterations;
     std::map<Colors::ID, std::function<ColorMode::Ptr()>> colorsFactory;
 

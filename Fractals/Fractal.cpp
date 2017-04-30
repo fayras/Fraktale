@@ -34,16 +34,24 @@ std::map<QString, QWidget*> Fractal::getSettings() {
   connect(colors, &QComboBox::currentTextChanged, [=](const QString& text){
     this->setColorMode(colors->currentData().value<Colors::ID>());
   });
+  connect(this, &Fractal::colorChanged, [=](const Colors::ID id){
+    int index = colors->findData(id);
+    if ( index != -1 ) { // -1 for not found
+      colors->setCurrentIndex(index);
+    }
+  });
 
   QSpinBox* iter = new QSpinBox;
   iter->setRange(1, 5000);
   iter->setValue(maxIterations);
   map.insert(std::pair<QString, QWidget*>("Iterationen", iter));
   connect(iter, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &Fractal::setMaxIterations);
+  connect(this, &Fractal::iterationsChanged, iter, &QSpinBox::setValue);
   return map;
 }
 
 void Fractal::setMaxIterations(unsigned iterations) {
+  emit iterationsChanged(iterations);
   maxIterations = iterations;
   update();
 }
@@ -52,7 +60,9 @@ void Fractal::setColorMode(Colors::ID colorsID) {
   auto found = colorsFactory.find(colorsID);
   assert(found != colorsFactory.end());
 
+  colormapID = colorsID;
   colormap = std::move(found->second());
+  emit colorChanged(colorsID);
   update();
 }
 

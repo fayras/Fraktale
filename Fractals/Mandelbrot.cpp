@@ -67,11 +67,14 @@ void Mandelbrot::scale(double factor) {
 }
 
 QDataStream &Mandelbrot::print(QDataStream &os) const {
-  return os << maxIterations << bounds;
+  return os << maxIterations << static_cast<unsigned>(colormapID) << bounds;
 }
 
 QDataStream &Mandelbrot::read(QDataStream &os) {
-  os >> maxIterations >> bounds;
+  unsigned colorID;
+  os >> maxIterations >> colorID >> bounds;
+  setColorMode(static_cast<Colors::ID>(colorID));
+  emit iterationsChanged(maxIterations);
   update();
   return os;
 }
