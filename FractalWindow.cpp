@@ -75,7 +75,12 @@ QWidget* FractalWindow::createSettings() {
     unsigned id;
     in >> id;
     createFractal(static_cast<Fractals::ID>(id));
+    int index = fractals->findData(static_cast<Fractals::ID>(id));
+    if ( index != -1 ) { // -1 for not found
+      fractals->setCurrentIndex(index);
+    }
     in >> *currentFractal;
+    currentFractal->update();
   });
   menu->addSeparator();
   connect(menu->addAction("Fraktal exportieren"), &QAction::triggered, [=] () {
