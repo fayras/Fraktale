@@ -2,6 +2,9 @@
 #define FRAKTALE_FRACTALIDENTIFIERS_HPP
 
 namespace Fractals {
+  /**
+   * IDs zu allen verfügbaren Fraktalen.
+   */
   enum ID : unsigned {
     EMPTY_FRACTAL,
     MANDELBROT,
