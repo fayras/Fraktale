@@ -119,7 +119,7 @@ class Fractal : public QObject {
     /**
      * Registriert eine Farbgebung, welche in dem Fraktal verwendet werden kann.
      *
-     * @tparam T Die Klasse der Farbgebung. @link Siehe ColorMode @endlink
+     * @tparam T Die Klasse der Farbgebung. Siehe @link ColorMode @endlink
      * @tparam Args Zusätzliche Parameter, je nachdem welche Farbgebung benutzt wird.
      * @param colorID Die ID, unter welcher die Farbgebung gespeichert werden soll.
      * @param args Zusätzliche Parameter, welche an die Klasse beim Intanzieren übergeben werden sollen.

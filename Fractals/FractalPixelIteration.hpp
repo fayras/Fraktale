@@ -9,6 +9,16 @@
  * Zur Zeit nur für Mandelbrot und Julia interessant.
  */
 struct FractalPixelIteration {
+  /**
+   * Erzeugt eine neue Instanz der Klasse.
+   *
+   * @param pX X-Koordinate auf der Zeichenfläche.
+   * @param pY Y-Koordinate auf der Zeichenfläche.
+   * @param pIt Die Anzahl der berechneten Iterationen.
+   * @param pMaxIt Die Anzahl der maximalen möglichen Iterationen.
+   * @param pXV Der x-Wert der Berechnung.
+   * @param pYV Der y-Wert der Berechnung.
+   */
   FractalPixelIteration(int pX, int pY, int pIt, int pMaxIt, double pXV, double pYV) {
     x = pX; y = pY; iterations = pIt; maxIterations = pIt; xValue = pXV; yValue = pYV;
   }

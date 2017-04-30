@@ -39,14 +39,12 @@ class KochCurveRenderTask : public QThread  {
      */
     void run() override;
     /**
-     * Rendert die Mandelbrot Menge in einem bestimmten Bereich.
+     * Berechnet die Pixel des Fraktals.
      *
-     * @param pRect          Der Bereich in Pixeln, welcher berechnet werden soll.
-     * @param pBounds        Der Bereich der Mandelbrot-Menge, welcher berechnet werden soll.
-     *                       Die Mandelbrot-Menge hat normalerweise einen Bereich
-     *                       (-2.5, -1, 3.5, 2), wobei 3.5 und 2 jeweils die
-     *                       Breite und die Höhe des Bereichs darstellen.
-     * @param pMaxIterations Die maximale Anzahl von Iterationen pro Pixel.
+     * Löst das Signal KochCurveRenderTask::rendered aus.
+     *
+     * @param depth Anzahl in Iterationen.
+     * @param line Die Angfangslinie.
      */
     void render(int depth, KochCurve::Line line);
 

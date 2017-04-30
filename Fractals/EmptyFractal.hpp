@@ -8,6 +8,12 @@
  */
 class EmptyFractal : public Fractal {
   public:
+    /**
+     * Erzeugt eine neue Instanz von einem leeren Fraktal.
+     *
+     * @param width Die Breite der Zeichenfläche.
+     * @param height Die Breite der Zeichenfläche.
+     */
     EmptyFractal(int width = 1, int height = 1);
     void update() override;
     /**

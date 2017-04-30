@@ -43,6 +43,9 @@ class Julia : public Mandelbrot {
      * Der imaginäre Teil.
      */
     double iPart;
+    /**
+     * Die RenderTasks, welche die Pixel berechnen sollen.
+     */
     std::vector<std::unique_ptr<JuliaRenderTask>> workers;
 };
 
