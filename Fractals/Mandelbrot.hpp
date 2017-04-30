@@ -30,27 +30,17 @@ class Mandelbrot : public Fractal {
      * @param height Höhe der Fläche, wie viele Pixel das Fraktal anzeigen soll.
      */
     Mandelbrot(int width, int height);
-    /**
-     * Aktualisiert das Fraktal.
-     */
     void update() override;
-    /**
-     * Verschiebt das Fraktal um einen bestimmten Offset.
-     *
-     * @param offset Koordinaten, um wie viele Pixel das Fraktal verschoben werden soll.
-     */
     void translate(QPointF offset) override;
-    /**
-     * Zoomt das Fraktal hinei oder heraus.
-     *
-     * @param factor Der Faktor, um den das Fraktal skaliert werden soll.
-     *               2 bedeutet hereinzoomen, 0.5 bedeutet herauszoomen.
-     */
     void scale(double factor) override;
 
   protected:
     QDataStream &print(QDataStream &os) const override;
     QDataStream &read(QDataStream &os) override;
+    /**
+     * Erstellt die einzelnen Thread-Klasse, welche das Fraktal
+     * später berechnen sollen.
+     */
     virtual void createWorkers();
 
     /**
