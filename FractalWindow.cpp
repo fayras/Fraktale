@@ -104,7 +104,7 @@ QWidget* FractalWindow::createSettings() {
   btExport->setMenu(menu);
   buttons->addItem(new QSpacerItem(200, 0, QSizePolicy::Expanding, QSizePolicy::Expanding));
   buttons->addWidget(btExport);
-  QPushButton* info = new QPushButton("About");
+  QPushButton* info = new QPushButton("Hilfe");
   connect(info, &QPushButton::clicked, [this] () {
     QFile about(":/about");
     about.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -112,6 +112,10 @@ QWidget* FractalWindow::createSettings() {
     aboutBox.exec();
   });
   buttons->addWidget(info);
+
+  QPushButton* exit = new QPushButton("Beenden");
+  connect(exit, &QPushButton::clicked, this, &FractalWindow::close);
+  buttons->addWidget(exit);
   formLayout->addRow(buttons);
 
   settingsGroup->setLayout(formLayout);

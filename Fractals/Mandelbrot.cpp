@@ -5,6 +5,7 @@
 #include "../ColorModes/Grayscale.hpp"
 #include <QPainter>
 #include <cmath>
+#include <QDebug>
 
 Mandelbrot::Mandelbrot(int width, int height)
   : Fractal(width, height), bounds(-2.5, -1, 3.5, 2)
@@ -20,15 +21,15 @@ Mandelbrot::Mandelbrot(int width, int height)
 void Mandelbrot::update() {
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
     QRect rect(
-        (int) std::floor(i * image.width() / QThread::idealThreadCount()),
+        (int) std::round((double) i * (double) image.width() / (double) QThread::idealThreadCount()),
         0,
-        (int) std::ceil((double) image.width() / QThread::idealThreadCount()),
+        (int) std::ceil((double) image.width() / (double) QThread::idealThreadCount()) + 1,
         image.height()
     );
     QRectF tempBounds(
-        bounds.left() + i * bounds.width() / QThread::idealThreadCount(),
+        bounds.left() + (double) i * bounds.width() / (double) QThread::idealThreadCount(),
         bounds.top(),
-        bounds.width() / QThread::idealThreadCount(),
+        bounds.width() / (double) QThread::idealThreadCount(),
         bounds.height()
     );
     workers[i]->render(rect, tempBounds, maxIterations);

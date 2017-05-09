@@ -37,9 +37,9 @@ void Julia::createWorkers() {
 void Julia::update() {
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
     QRect rect(
-        (int) std::floor(i * image.width() / QThread::idealThreadCount()),
+        (int) std::round(i * image.width() / QThread::idealThreadCount()),
         0,
-        (int) std::ceil((double) image.width() / QThread::idealThreadCount()),
+        (int) std::ceil((double) image.width() / QThread::idealThreadCount()) + 1,
         image.height()
     );
     QRectF tempBounds(
