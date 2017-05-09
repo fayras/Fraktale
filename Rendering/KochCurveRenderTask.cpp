@@ -2,7 +2,7 @@
 #include <QDebug>
 
 KochCurveRenderTask::KochCurveRenderTask(QObject *parent)
-    : QThread(parent), restart(false), maxIterations(5), firstLine(), rect(0, 0, 1, 1)
+    : RenderTask(parent), maxIterations(5), firstLine(), rect(0, 0, 1, 1)
 {}
 
 KochCurveRenderTask::~KochCurveRenderTask() {

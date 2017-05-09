@@ -1,13 +1,13 @@
 #ifndef FRAKTALE_KOCHCURVERENDERTASK_HPP
 #define FRAKTALE_KOCHCURVERENDERTASK_HPP
 
-#include <QThread>
+#include "RenderTask.hpp"
 #include "../Fractals/KochCurve.hpp"
 
 /**
  * Berechnet die einzelnen Punkte der Koch-Schneeflocke in einem Thread.
  */
-class KochCurveRenderTask : public QThread  {
+class KochCurveRenderTask : public RenderTask  {
   Q_OBJECT
 
   public:
@@ -53,7 +53,6 @@ class KochCurveRenderTask : public QThread  {
 
   private:
     int maxIterations;
-    bool restart;
     QRectF rect;
     KochCurve::Line firstLine;
 };

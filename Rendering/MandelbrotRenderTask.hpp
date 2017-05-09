@@ -1,7 +1,7 @@
 #ifndef FRAKTALE_MANDELBROTRENDERTASK_HPP
 #define FRAKTALE_MANDELBROTRENDERTASK_HPP
 
-#include <QThread>
+#include "RenderTask.hpp"
 #include <QtCore/QRect>
 
 struct FractalPixelIteration;
@@ -9,7 +9,7 @@ struct FractalPixelIteration;
 /**
  * Berechnet einzelne Pixel der Mandelbrot-Menge in einem Thread.
  */
-class MandelbrotRenderTask : public QThread {
+class MandelbrotRenderTask : public RenderTask {
     Q_OBJECT
 
   public:
@@ -56,7 +56,6 @@ class MandelbrotRenderTask : public QThread {
     QRect rect;
     QRectF fractalBounds;
     int maxIterations;
-    bool restart;
 };
 
 #endif //FRAKTALE_MANDELBROTRENDERTASK_HPP

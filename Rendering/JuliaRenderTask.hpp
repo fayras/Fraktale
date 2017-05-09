@@ -1,15 +1,15 @@
 #ifndef FRAKTALE_JULIARENDERTASK_HPP
 #define FRAKTALE_JULIARENDERTASK_HPP
 
-#include <QThread>
 #include <QtCore/QRect>
+#include "RenderTask.hpp"
 
 struct FractalPixelIteration;
 
 /**
  * Berechnet einzelne Pixel der Mandelbrot-Menge in einem Thread.
  */
-class JuliaRenderTask : public QThread {
+class JuliaRenderTask : public RenderTask {
     Q_OBJECT
 
   public:
@@ -49,8 +49,8 @@ class JuliaRenderTask : public QThread {
      *                       (-2.5, -1, 3.5, 2), wobei 3.5 und 2 jeweils die
      *                       Breite und die Höhe des Bereichs darstellen.
      * @param pMaxIterations Die maximale Anzahl von Iterationen pro Pixel.
-     * @param rP Der reelle Teil zum Fraktal.
-     * @param iP Der imaginäre Teil zum Fraktal.
+     * @param rP             Der reelle Teil zum Fraktal.
+     * @param iP             Der imaginäre Teil zum Fraktal.
      */
     void render(QRect pRect, QRectF pBounds, int pMaxIterations, double rP, double iP);
 
@@ -60,8 +60,6 @@ class JuliaRenderTask : public QThread {
     int maxIterations;
     double rPart;
     double iPart;
-    bool restart;
 };
-
 
 #endif //FRAKTALE_JULIARENDERTASK_HPP
