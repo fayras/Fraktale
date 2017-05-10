@@ -18,17 +18,27 @@
 FractalWindow::FractalWindow(QWidget *parent)
   : QDialog(parent), isDragging(false), currentFractal(new EmptyFractal())
 {
+  // Verbindet die zwei Signale, so dass das Fraktal auf die Zeichenfläche
+  // gezeichnet werden kann, sobald das Fraktal etwas zum Zeichnen hat.
   connect(currentFractal.get(), &Fractal::drawSignal, this, &FractalWindow::draw);
 
+  // Ein horizontales Layout, bietet Platz für die Zeichenfläche
+  // und die Einstellungen. Dabei nimmt die Zeichenfläche zwei
+  // Drittel des Platzes und die Einstellungen 1/3 ein.
   QHBoxLayout *mainLayout = new QHBoxLayout;
   QSizePolicy canvasSize(QSizePolicy::Preferred, QSizePolicy::Preferred);
   canvasSize.setHorizontalStretch(2);
   canvas.setSizePolicy(canvasSize);
+  // Fügt einmal die Zeichenfläche und die Gruppe
+  // mit den Einstellungen zum Layout hinzu.
   mainLayout->addWidget(&canvas);
   mainLayout->addWidget(createSettings());
 
   setLayout(mainLayout);
   setWindowTitle("Fraktale");
+  // Setzt das Fenster auf die angegebene Größe. Zusätzlich
+  // werden dadurch alle Zeichen-Signale ausgelöst, so
+  // dass das Fraktal gezeichnet wird.
   resize(800, 400);
 }
 
