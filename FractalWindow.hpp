@@ -49,6 +49,8 @@ class FractalWindow : public QDialog {
 
     void importFractal();
 
+    void exportFractal();
+
   public:
     /**
      * Konstruktor, welcher eine Instanz von 'FractalWindow' erzeugt.
@@ -127,6 +129,8 @@ class FractalWindow : public QDialog {
      * @param event
      */
     void wheelEvent(QWheelEvent *event) override;
+
+    void keyReleaseEvent(QKeyEvent *event) override;
     /**
      * Ein Event, welches ausgelöst wird,
      * wenn eine Maustaste gedrückt wird.

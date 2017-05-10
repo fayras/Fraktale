@@ -68,17 +68,7 @@ QWidget* FractalWindow::createSettings() {
   QMenu* menu = new QMenu();
   connect(menu->addAction("Fraktal importieren"), &QAction::triggered, this, &FractalWindow::importFractal);
   menu->addSeparator();
-  connect(menu->addAction("Fraktal exportieren"), &QAction::triggered, [=] () {
-    QString fileName = QFileDialog::getSaveFileName(this, "Save File", "./fractal.frac", "Fractal (*.frac)");
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly|QFile::Truncate)) {
-      QMessageBox::information(this, tr("Unable to open file"), file.errorString());
-      return;
-    }
-    QDataStream out(&file);
-    out.setVersion(QDataStream::Qt_5_0);
-    out << fractals->currentData().value<unsigned>() << *currentFractal;
-  });
+  connect(menu->addAction("Fraktal exportieren"), &QAction::triggered, this, &FractalWindow::exportFractal);
   connect(menu->addAction("Als Bild exportieren"), &QAction::triggered, [this] () {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "./fractal.png", "Images (*.png *.xpm *.jpg)");
     if(fileName.isEmpty()) {
@@ -127,6 +117,14 @@ void FractalWindow::wheelEvent(QWheelEvent *event) {
     } else {
       currentFractal->scale(steps * 2.0);
     }
+  }
+}
+
+void FractalWindow::keyReleaseEvent(QKeyEvent *event) {
+  if(event->key() == Qt::Key_Plus) {
+    currentFractal->scale(2.0);
+  } else if(event->key() == Qt::Key_Minus) {
+    currentFractal->scale(0.5);
   }
 }
 
@@ -184,4 +182,16 @@ void FractalWindow::importFractal() {
   }
   in >> *currentFractal;
   currentFractal->update();
+}
+
+void FractalWindow::exportFractal() {
+  QString fileName = QFileDialog::getSaveFileName(this, "Save File", "./fractal.frac", "Fractal (*.frac)");
+  QFile file(fileName);
+  if (!file.open(QIODevice::WriteOnly|QFile::Truncate)) {
+    QMessageBox::information(this, tr("Unable to open file"), file.errorString());
+    return;
+  }
+  QDataStream out(&file);
+  out.setVersion(QDataStream::Qt_5_0);
+  out << fractals->currentData().value<unsigned>() << *currentFractal;
 }
