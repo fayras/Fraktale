@@ -2,6 +2,7 @@
 #define FRAKTALE_FRACTALWINDOW_HPP
 
 #include <QtWidgets/QDialog>
+#include <QComboBox>
 #include "Canvas.hpp"
 #include "Fractals/Fractal.hpp"
 
@@ -46,6 +47,8 @@ class FractalWindow : public QDialog {
      */
     void createFractal(Fractals::ID fractalID);
 
+    void importFractal();
+
   public:
     /**
      * Konstruktor, welcher eine Instanz von 'FractalWindow' erzeugt.
@@ -67,7 +70,7 @@ class FractalWindow : public QDialog {
      * @see createFractal
      */
     template <typename T>
-    void registerFractal(Fractals::ID fractalID);
+    void registerFractal(Fractals::ID fractalID, QString label);
 
   private:
     /**
@@ -92,6 +95,7 @@ class FractalWindow : public QDialog {
      * stellungen der einzelnen Fraktale.
      */
     QFormLayout* settings;
+    QComboBox* fractals;
     /**
      * Eine Membervariable, welche Funktionen zum Erzeugen
      * von Fraktalen einer Frktal-ID zuordnet.
@@ -147,7 +151,8 @@ class FractalWindow : public QDialog {
 };
 
 template<typename T>
-void FractalWindow::registerFractal(Fractals::ID fractalID) {
+void FractalWindow::registerFractal(Fractals::ID fractalID, QString label) {
+  fractals->addItem(label, QVariant::fromValue(fractalID));
   fractalFactory[fractalID] = [this] () -> Fractal::Ptr {
     return Fractal::Ptr(new T(canvas.size().width(), canvas.size().height()));
   };

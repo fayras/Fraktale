@@ -16,11 +16,17 @@
 #include "Fractals/KochCurve.hpp"
 
 FractalWindow::FractalWindow(QWidget *parent)
-  : QDialog(parent), isDragging(false), currentFractal(new EmptyFractal())
+  : QDialog(parent), isDragging(false), currentFractal(new EmptyFractal()), fractals(new QComboBox)
 {
   // Verbindet die zwei Signale, so dass das Fraktal auf die Zeichenfläche
   // gezeichnet werden kann, sobald das Fraktal etwas zum Zeichnen hat.
   connect(currentFractal.get(), &Fractal::drawSignal, this, &FractalWindow::draw);
+
+  // Registriere die Fraktale, welche in der Applikation benutzt wernde.
+  registerFractal<EmptyFractal>(Fractals::ID::EMPTY_FRACTAL, "Keine Auswahl");
+  registerFractal<Mandelbrot>(Fractals::ID::MANDELBROT, "Mandelbrot-Menge");
+  registerFractal<Julia>(Fractals::ID::JULIA, "Julia-Menge");
+  registerFractal<KochCurve>(Fractals::ID::KOCH_CURVE, "Koch-Schneeflocke");
 
   // Ein horizontales Layout, bietet Platz für die Zeichenfläche
   // und die Einstellungen. Dabei nimmt die Zeichenfläche zwei
@@ -49,20 +55,6 @@ QWidget* FractalWindow::createSettings() {
   settingsGroup->setSizePolicy(settingsSize);
   QFormLayout* formLayout = new QFormLayout;
 
-  QComboBox* fractals = new QComboBox;
-
-  fractals->addItem("Keine Auswahl", QVariant::fromValue(Fractals::ID::EMPTY_FRACTAL));
-  registerFractal<EmptyFractal>(Fractals::ID::EMPTY_FRACTAL);
-
-  fractals->addItem("Mandelbrot", QVariant::fromValue(Fractals::ID::MANDELBROT));
-  registerFractal<Mandelbrot>(Fractals::ID::MANDELBROT);
-
-  fractals->addItem("Julia", QVariant::fromValue(Fractals::ID::JULIA));
-  registerFractal<Julia>(Fractals::ID::JULIA);
-
-  fractals->addItem("Koch-Kurve", QVariant::fromValue(Fractals::ID::KOCH_CURVE));
-  registerFractal<KochCurve>(Fractals::ID::KOCH_CURVE);
-
   formLayout->addRow("Fraktal", fractals);
   connect(fractals, &QComboBox::currentTextChanged, [=](const QString& text) {
     this->createFractal(fractals->currentData().value<Fractals::ID>());
@@ -74,24 +66,7 @@ QWidget* FractalWindow::createSettings() {
   QHBoxLayout* buttons = new QHBoxLayout();
   QPushButton* btExport = new QPushButton("Menü");
   QMenu* menu = new QMenu();
-  connect(menu->addAction("Fraktal importieren"), &QAction::triggered, [=] () {
-    QString fileName = QFileDialog::getOpenFileName(this, "Open File", "./", "Fractal (*.frac)");
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly)) {
-      QMessageBox::information(this, tr("Unable to open file"), file.errorString());
-      return;
-    }
-    QDataStream in(&file);
-    unsigned id;
-    in >> id;
-    createFractal(static_cast<Fractals::ID>(id));
-    int index = fractals->findData(static_cast<Fractals::ID>(id));
-    if ( index != -1 ) { // -1 for not found
-      fractals->setCurrentIndex(index);
-    }
-    in >> *currentFractal;
-    currentFractal->update();
-  });
+  connect(menu->addAction("Fraktal importieren"), &QAction::triggered, this, &FractalWindow::importFractal);
   menu->addSeparator();
   connect(menu->addAction("Fraktal exportieren"), &QAction::triggered, [=] () {
     QString fileName = QFileDialog::getSaveFileName(this, "Save File", "./fractal.frac", "Fractal (*.frac)");
@@ -189,5 +164,24 @@ void FractalWindow::createFractal(Fractals::ID fractalID) {
   for(auto const &setting : currentFractal->getSettings()) {
     settings->addRow(setting.first, setting.second);
   }
+  currentFractal->update();
+}
+
+void FractalWindow::importFractal() {
+  QString fileName = QFileDialog::getOpenFileName(this, "Open File", "./", "Fractal (*.frac)");
+  QFile file(fileName);
+  if (!file.open(QIODevice::ReadOnly)) {
+    QMessageBox::information(this, tr("Unable to open file"), file.errorString());
+    return;
+  }
+  QDataStream in(&file);
+  unsigned id;
+  in >> id;
+  createFractal(static_cast<Fractals::ID>(id));
+  int index = fractals->findData(static_cast<Fractals::ID>(id));
+  if ( index != -1 ) { // -1 for not found
+    fractals->setCurrentIndex(index);
+  }
+  in >> *currentFractal;
   currentFractal->update();
 }
