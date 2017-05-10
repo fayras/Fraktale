@@ -1,12 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 project(Fraktale)
 
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS "5.0")
-    set(CMAKE_CXX_COMPILER "clang++")
-  endif()
-endif()
-
 if (CMAKE_VERSION VERSION_LESS "3.1")
   if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set (CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")

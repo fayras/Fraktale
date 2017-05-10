@@ -124,8 +124,17 @@ class Fractal : public QObject {
      * @param colorID Die ID, unter welcher die Farbgebung gespeichert werden soll.
      * @param args Zusätzliche Parameter, welche an die Klasse beim Intanzieren übergeben werden sollen.
      */
-    template <typename T, typename... Args>
-    void registerColorMode(Colors::ID colorID, Args&&... args);
+    template <typename T>
+    void registerColorMode(Colors::ID colorID);
+    /**
+     * Registriert eine Farbgebung, welche in dem Fraktal verwendet werden kann.
+     *
+     * @tparam T Die Klasse der Farbgebung. Siehe @link ColorMode @endlink
+     * @param colorID Die ID, unter welcher die Farbgebung gespeichert werden soll.
+     * @param smooth Zusätzliche Parameter, welche an die Klasse beim Intanzieren übergeben werden sollen.
+     */
+    template <typename T>
+    void registerColorMode(Colors::ID colorID, bool smooth);
     /**
      * Gibt das gerenderte Bild des Fraktals zurück.
      *
@@ -192,10 +201,17 @@ class Fractal : public QObject {
     virtual QDataStream& read(QDataStream& os);
 };
 
-template<typename T, typename... Args>
-void Fractal::registerColorMode(Colors::ID colorID, Args&&... args) {
+template<typename T>
+void Fractal::registerColorMode(Colors::ID colorID) {
   colorsFactory[colorID] = [=] () -> ColorMode::Ptr {
-    return ColorMode::Ptr(new T(args...));
+    return ColorMode::Ptr(new T());
+  };
+}
+
+template<typename T>
+void Fractal::registerColorMode(Colors::ID colorID, bool smooth) {
+  colorsFactory[colorID] = [=] () -> ColorMode::Ptr {
+    return ColorMode::Ptr(new T(smooth));
   };
 }
 
