@@ -47,8 +47,22 @@ class FractalWindow : public QDialog {
      */
     void createFractal(Fractals::ID fractalID);
 
+    /**
+     * Mit dieser Funktion wird ein Datei-Browser geöffnet,
+     * so dass ein Fraktal, welches zuvor exportiert
+     * wurde, zu importieren.
+     *
+     * @see exportFractal
+     */
     void importFractal();
 
+    /**
+     * Exportiert das aktuelle Fraktal in eine Datei.
+     * Dabei werden auch aktuelle Einstellungen
+     * des Fraktals gespeichert.
+     *
+     * @see importFractal
+     */
     void exportFractal();
 
   public:
@@ -97,7 +111,11 @@ class FractalWindow : public QDialog {
      * stellungen der einzelnen Fraktale.
      */
     QFormLayout* settings;
-    QComboBox* fractals;
+    /**
+     * Ein Zeiger auf die Combobox zum Auswählen
+     * verschiedener Fraktale.
+     */
+    QComboBox* fractalsCombo;
     /**
      * Eine Membervariable, welche Funktionen zum Erzeugen
      * von Fraktalen einer Frktal-ID zuordnet.
@@ -129,7 +147,13 @@ class FractalWindow : public QDialog {
      * @param event
      */
     void wheelEvent(QWheelEvent *event) override;
-
+    /**
+     * Überschreibt das Event beim Loslassen einer
+     * Taste. Mit '+' und '-' kann so herein-
+     * und herausgezoomt werden.
+     *
+     * @param event
+     */
     void keyReleaseEvent(QKeyEvent *event) override;
     /**
      * Ein Event, welches ausgelöst wird,
@@ -156,7 +180,10 @@ class FractalWindow : public QDialog {
 
 template<typename T>
 void FractalWindow::registerFractal(Fractals::ID fractalID, QString label) {
-  fractals->addItem(label, QVariant::fromValue(fractalID));
+  // Fügt einen Eintrag zu der Combobox der Fraktale hinzu.
+  fractalsCombo->addItem(label, QVariant::fromValue(fractalID));
+  // Speichert eine Funktion zum Erzeugen eines neuen Fraktals,
+  // welche bei Bedarf durch AUsführen ein neues Fraktal generiert.
   fractalFactory[fractalID] = [this] () -> Fractal::Ptr {
     return Fractal::Ptr(new T(canvas.size().width(), canvas.size().height()));
   };

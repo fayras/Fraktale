@@ -16,7 +16,7 @@
 #include "Fractals/KochCurve.hpp"
 
 FractalWindow::FractalWindow(QWidget *parent)
-  : QDialog(parent), isDragging(false), currentFractal(new EmptyFractal()), fractals(new QComboBox)
+  : QDialog(parent), isDragging(false), currentFractal(new EmptyFractal()), fractalsCombo(new QComboBox)
 {
   // Verbindet die zwei Signale, so dass das Fraktal auf die Zeichenfläche
   // gezeichnet werden kann, sobald das Fraktal etwas zum Zeichnen hat.
@@ -55,9 +55,9 @@ QWidget* FractalWindow::createSettings() {
   settingsGroup->setSizePolicy(settingsSize);
   QFormLayout* formLayout = new QFormLayout;
 
-  formLayout->addRow("Fraktal", fractals);
-  connect(fractals, &QComboBox::currentTextChanged, [=](const QString& text) {
-    this->createFractal(fractals->currentData().value<Fractals::ID>());
+  formLayout->addRow("Fraktal", fractalsCombo);
+  connect(fractalsCombo, &QComboBox::currentTextChanged, [=](const QString& text) {
+    this->createFractal(fractalsCombo->currentData().value<Fractals::ID>());
   });
   settings = new QFormLayout;
   formLayout->addRow(settings);
@@ -176,9 +176,9 @@ void FractalWindow::importFractal() {
   unsigned id;
   in >> id;
   createFractal(static_cast<Fractals::ID>(id));
-  int index = fractals->findData(static_cast<Fractals::ID>(id));
+  int index = fractalsCombo->findData(static_cast<Fractals::ID>(id));
   if ( index != -1 ) { // -1 for not found
-    fractals->setCurrentIndex(index);
+    fractalsCombo->setCurrentIndex(index);
   }
   in >> *currentFractal;
   currentFractal->update();
@@ -193,5 +193,5 @@ void FractalWindow::exportFractal() {
   }
   QDataStream out(&file);
   out.setVersion(QDataStream::Qt_5_0);
-  out << fractals->currentData().value<unsigned>() << *currentFractal;
+  out << fractalsCombo->currentData().value<unsigned>() << *currentFractal;
 }
