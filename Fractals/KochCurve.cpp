@@ -62,11 +62,15 @@ void KochCurve::updatePixels(std::vector<QPointF> points) {
   painter.translate(_offset);
   painter.setClipRect(0, 0, image.width(), image.height());
   painter.setPen(QPen(Qt::black, 0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+  QPainterPath path(QPointF(points[0].x() * image.width(), points[0].y() * image.height()));
   for(int i = 1; i < points.size(); i += 2) {
-    QPointF a(points[i - 1].x() * image.width(), points[i - 1].y() * image.height());
+    //QPointF a(points[i - 1].x() * image.width(), points[i - 1].y() * image.height());
     QPointF b(points[i].x() * image.width(), points[i].y() * image.height());
-    painter.drawLine(a, b);
+    //painter.drawLine(a, b);
+    path.lineTo(b);
   }
+
+  painter.drawPath(path);
   emit drawSignal();
 }
 

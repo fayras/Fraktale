@@ -41,6 +41,7 @@ void MandelbrotRenderTask::run() {
     }
     emit rendered(pixelIterations);
   }
+  emit done();
 }
 
 void MandelbrotRenderTask::render(QRect pRect, QRectF pBounds, int pMaxIterations) {

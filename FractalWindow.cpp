@@ -16,7 +16,10 @@
 #include "Fractals/KochCurve.hpp"
 
 FractalWindow::FractalWindow(QWidget *parent)
-  : QDialog(parent), isDragging(false), currentFractal(new EmptyFractal()), fractalsCombo(new QComboBox)
+  : QDialog(parent),
+    isDragging(false),
+    currentFractal(new EmptyFractal()),
+    fractalsCombo(new QComboBox)
 {
   // Verbindet die zwei Signale, so dass das Fraktal auf die Zeichenfläche
   // gezeichnet werden kann, sobald das Fraktal etwas zum Zeichnen hat.
@@ -108,9 +111,9 @@ void FractalWindow::draw() {
 
 void FractalWindow::wheelEvent(QWheelEvent *event) {
   if(canvas.underMouse()) {
-    QPointF mousePos = canvas.mapFromGlobal(QCursor::pos());
-    QPointF offset = QPointF(canvas.width() / 2.0, canvas.height() / 2.0) - mousePos;
-    currentFractal->translate(offset);
+    //QPointF mousePos = canvas.mapFromGlobal(QCursor::pos());
+    //QPointF offset = QPointF(canvas.width() / 2.0, canvas.height() / 2.0) - mousePos;
+    //currentFractal->translate(offset);
     double steps = event->delta() / 8 / 15.0;
     if(steps < 0) {
       currentFractal->scale(-1.0 / (steps * 2.0));

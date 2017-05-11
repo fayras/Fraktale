@@ -14,6 +14,7 @@ void KochCurveRenderTask::run() {
   std::vector<QPointF> points;
   calculateCurve(maxIterations, firstLine, points);
   emit rendered(points);
+  emit done();
 }
 
 void KochCurveRenderTask::render(int pDepth, KochCurve::Line pLine) {

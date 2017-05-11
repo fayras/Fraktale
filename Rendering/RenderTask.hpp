@@ -6,6 +6,9 @@
 class RenderTask : public QThread {
   Q_OBJECT
 
+  signals:
+    void done();
+
   public:
     explicit RenderTask(QObject *parent = 0);
     ~RenderTask();
