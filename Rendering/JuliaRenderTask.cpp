@@ -40,7 +40,6 @@ void JuliaRenderTask::run() {
     }
     emit rendered(pixelIterations);
   }
-  emit done();
 }
 
 void JuliaRenderTask::render(QRect pRect, QRectF pBounds, int pMaxIterations, double rP, double iP) {
