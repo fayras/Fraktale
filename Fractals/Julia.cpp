@@ -108,7 +108,7 @@ void Julia::draw(Canvas &target) {
 }
 */
 QString Julia::getOverlayInformation() const {
-  return "Reeller Teil: " + QString::number(rPart) + ", Imaginärer Teil: " + QString::number(iPart) + "\n";
+  return "Reeller Teil: " + QString::number(rPart) + ", Imaginärer Teil: " + QString::number(iPart);
 }
 
 void Julia::checkThreadStatus() {

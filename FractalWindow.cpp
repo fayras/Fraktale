@@ -107,8 +107,14 @@ void FractalWindow::resizeEvent(QResizeEvent *event) {
 
 void FractalWindow::draw() {
   currentFractal->draw(canvas);
-  QString renderingInfoText = isRendering ? "Rendering..." : "";
-  canvas.drawOverlay(currentFractal->getOverlayInformation() + renderingInfoText);
+  QStringList info;
+  if(!currentFractal->getOverlayInformation().isEmpty()) {
+    info << currentFractal->getOverlayInformation();
+  }
+  if(isRendering) {
+    info << "Rendering...";
+  }
+  canvas.drawOverlay(info);
 }
 
 void FractalWindow::wheelEvent(QWheelEvent *event) {

@@ -16,7 +16,8 @@ class Canvas : public QWidget {
      */
     void draw(QImage& image);
 
-    void drawOverlay(QString info);
+    //void drawOverlay(QString info);
+    void drawOverlay(QStringList infoLines);
 
   protected:
     /**
