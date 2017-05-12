@@ -29,6 +29,9 @@ class Julia : public Mandelbrot {
      */
     void iPartChanged(double iP);
 
+  private slots:
+    void checkThreadStatus();
+
   public:
     /**
      * Erzeugt eine neue Instanz des Julia-Fraktals.
@@ -38,16 +41,8 @@ class Julia : public Mandelbrot {
      */
     Julia(int width, int height);
     void update() override;
-    /**
-     * Zeichnet das Fraktal auf eine Zeichenfläche.
-     *
-     * Zusätzlich werden noch der reelle und imaginäre Teil in
-     * der oberen rechten Ecke als Information gezeichnet.
-     *
-     * @param target Zeichenfläche, auf die das Fraktal gezeichnet werden soll.
-     */
-    void draw(Canvas &target) override;
     virtual std::map<QString, QWidget*> getSettings();
+    QString getOverlayInformation() const override;
 
   protected:
     QDataStream &print(QDataStream &os) const override;

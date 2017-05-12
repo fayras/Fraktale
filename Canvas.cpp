@@ -1,4 +1,5 @@
 #include <QtGui/QPainter>
+#include <QDebug>
 #include "Canvas.hpp"
 
 void Canvas::paintEvent(QPaintEvent *event) {
@@ -17,5 +18,18 @@ void Canvas::paintEvent(QPaintEvent *event) {
 
 void Canvas::draw(QImage& image) {
   pixmap = QPixmap::fromImage(image);
+  update();
+}
+
+void Canvas::drawOverlay(QString info) {
+  // Ist keine Info vorhanden, so brauchen wir gar nicht
+  // erst das durchsichtige Rechteck zu zeichnen.
+  if(info.isEmpty()) {
+    return;
+  }
+
+  QPainter painter(&pixmap);
+  painter.setPen(Qt::white);
+  painter.drawText(pixmap.rect().marginsRemoved(QMargins(10, 10, 10, 10)), Qt::AlignRight, info);
   update();
 }

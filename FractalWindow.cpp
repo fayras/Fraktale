@@ -107,6 +107,8 @@ void FractalWindow::resizeEvent(QResizeEvent *event) {
 
 void FractalWindow::draw() {
   currentFractal->draw(canvas);
+  QString renderingInfoText = isRendering ? "Rendering..." : "";
+  canvas.drawOverlay(currentFractal->getOverlayInformation() + renderingInfoText);
 }
 
 void FractalWindow::wheelEvent(QWheelEvent *event) {
@@ -203,9 +205,11 @@ void FractalWindow::exportFractal() {
 }
 
 void FractalWindow::showWaitingIndicator() {
-  qDebug() << "loading";
+  isRendering = true;
+  draw();
 }
 
 void FractalWindow::hideWaitingIndicator() {
-  qDebug() << "done!";
+  isRendering = false;
+  draw();
 }

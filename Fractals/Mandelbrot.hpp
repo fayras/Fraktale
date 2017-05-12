@@ -22,7 +22,7 @@ class Mandelbrot : public Fractal {
      */
     void updatePixels(std::vector<FractalPixelIteration> pixelIterations);
 
-  protected slots:
+  private slots:
     /**
      * Slot:
      * Überprüft, ob alle Render-Thread fertig sind und löst

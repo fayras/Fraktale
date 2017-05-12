@@ -95,6 +95,10 @@ const QImage &Fractal::getImage() const {
   return image;
 }
 
+QString Fractal::getOverlayInformation() const {
+  return QString();
+}
+
 QDataStream& operator<<(QDataStream& os, const Fractal& fractal) {
   return fractal.print(os);
 }

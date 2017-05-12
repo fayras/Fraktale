@@ -111,6 +111,7 @@ class FractalWindow : public QDialog {
      * Variable, welche angibt, ob das Fraktal zur Zeit bewegt wird.
      */
     bool isDragging;
+    bool isRendering;
     /**
      * Die Letzte Position der Maus beim Bewegen des
      * Fraktals, in lokalen Koordinaten des Widgets.

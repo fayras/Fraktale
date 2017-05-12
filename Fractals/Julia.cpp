@@ -90,6 +90,7 @@ std::map<QString, QWidget*> Julia::getSettings() {
 	return settings;
 }
 
+/*
 void Julia::draw(Canvas &target) {
 	Fractal::draw(target);
 
@@ -104,4 +105,20 @@ void Julia::draw(Canvas &target) {
 	painter.drawRect((image.width() - textWidth) - 10, 0, textWidth + 10, metrics.lineSpacing() + 5);
 	painter.setPen(Qt::white);
 	painter.drawText(image.width() - textWidth - 5, metrics.leading() + metrics.ascent(), text);
+}
+*/
+QString Julia::getOverlayInformation() const {
+  return "Reeller Teil: " + QString::number(rPart) + ", Imaginärer Teil: " + QString::number(iPart) + "\n";
+}
+
+void Julia::checkThreadStatus() {
+  bool allThreadsDone = true;
+  for(auto& worker : workers) {
+    if(!worker->isFinished()) {
+      allThreadsDone = false;
+    }
+  }
+  if(allThreadsDone) {
+    emit finishedRendering();
+  }
 }

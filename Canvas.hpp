@@ -16,6 +16,8 @@ class Canvas : public QWidget {
      */
     void draw(QImage& image);
 
+    void drawOverlay(QString info);
+
   protected:
     /**
      * Das Event, welches für das eigentliche Zeichnen

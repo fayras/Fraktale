@@ -154,6 +154,8 @@ class Fractal : public QObject {
      */
     const QImage& getImage() const;
 
+    virtual QString getOverlayInformation() const;
+
     /**
      * Operator-Overload, sodass man das Fraktal an
      * einen QDataStream hängen kann.
