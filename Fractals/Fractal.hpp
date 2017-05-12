@@ -44,6 +44,20 @@ class Fractal : public QObject {
      * @param id Die ID der neuen Farbgebung.
      */
     void colorChanged(Colors::ID id);
+    /**
+     * Signal:
+     * Wird ausgelöst, sobald das Fraktal anfängt zu rendern.
+     *
+     * @signal
+     */
+    void startRendering();
+    /**
+     * Signal:
+     * Wird ausgelöst, sobald das Fraktal vollständig berechnet wurde.
+     *
+     * @signal
+     */
+    void finishedRendering();
 
   public slots:
     /**

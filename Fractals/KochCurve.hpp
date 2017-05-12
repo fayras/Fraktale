@@ -29,6 +29,14 @@ class KochCurve : public Fractal {
      */
     void updatePixels(std::vector<QPointF> points);
 
+  private slots:
+    /**
+     * Slot:
+     * Überprüft, ob alle Render-Thread fertig sind und löst
+     * letztendlich das Signal "finishedRendering" aus.
+     */
+    void checkThreadStatus();
+
   public:
     /**
      * Stellt eine Linie dar, welche Punkte für die nächste

@@ -12,10 +12,12 @@ KochCurve::KochCurve(int width, int height)
   for(int i = 0; i < 3; i++) {
     workers.push_back(std::unique_ptr<KochCurveRenderTask>(new KochCurveRenderTask(this)));
     connect(workers[i].get(), &KochCurveRenderTask::rendered, this, &KochCurve::updatePixels);
+    connect(workers[i].get(), &KochCurveRenderTask::finished, this, &KochCurve::checkThreadStatus);
   };
 }
 
 void KochCurve::update() {
+  emit startRendering();
   image.fill(Qt::white);
   points.clear();
   Line line1(QPointF(0.15, 0.7), QPointF(0.5, 0.01));
@@ -96,3 +98,17 @@ QDataStream &KochCurve::read(QDataStream &os) {
   update();
   return os;
 }
+
+
+void KochCurve::checkThreadStatus() {
+  bool allThreadsDone = true;
+  for(auto& worker : workers) {
+    if(!worker->isFinished()) {
+      allThreadsDone = false;
+    }
+  }
+  if(allThreadsDone) {
+    emit finishedRendering();
+  }
+}
+

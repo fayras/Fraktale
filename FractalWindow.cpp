@@ -157,6 +157,9 @@ void FractalWindow::createFractal(Fractals::ID fractalID) {
 
   currentFractal = std::move(found->second());
   connect(currentFractal.get(), &Fractal::drawSignal, this, &FractalWindow::draw);
+  connect(currentFractal.get(), &Fractal::startRendering, this, &FractalWindow::showWaitingIndicator);
+  connect(currentFractal.get(), &Fractal::finishedRendering, this, &FractalWindow::hideWaitingIndicator);
+
 
   QLayoutItem* child;
   while(settings->count() > 0 && (child = settings->takeAt(0)) != 0) {
@@ -197,4 +200,12 @@ void FractalWindow::exportFractal() {
   QDataStream out(&file);
   out.setVersion(QDataStream::Qt_5_0);
   out << fractalsCombo->currentData().value<unsigned>() << *currentFractal;
+}
+
+void FractalWindow::showWaitingIndicator() {
+  qDebug() << "loading";
+}
+
+void FractalWindow::hideWaitingIndicator() {
+  qDebug() << "done!";
 }

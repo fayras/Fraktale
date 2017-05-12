@@ -31,10 +31,12 @@ void Julia::createWorkers() {
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
     workers.push_back(std::unique_ptr<JuliaRenderTask>(new JuliaRenderTask(this)));
     connect(workers[i].get(), &JuliaRenderTask::rendered, this, &Julia::updatePixels);
+    connect(workers[i].get(), &JuliaRenderTask::finished, this, &Julia::checkThreadStatus);
   };
 }
 
 void Julia::update() {
+  emit startRendering();
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
     QRect rect(
         (int) std::round(i * image.width() / QThread::idealThreadCount()),

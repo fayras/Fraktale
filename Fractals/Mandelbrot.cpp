@@ -19,6 +19,7 @@ Mandelbrot::Mandelbrot(int width, int height)
 }
 
 void Mandelbrot::update() {
+  emit startRendering();
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
     QRect rect(
         (int) std::round((double) i * (double) image.width() / (double) QThread::idealThreadCount()),
@@ -84,5 +85,18 @@ void Mandelbrot::createWorkers() {
   for(int i = 0; i < QThread::idealThreadCount(); i++) {
     workers.push_back(std::unique_ptr<MandelbrotRenderTask>(new MandelbrotRenderTask(this)));
     connect(workers[i].get(), &MandelbrotRenderTask::rendered, this, &Mandelbrot::updatePixels);
+    connect(workers[i].get(), &MandelbrotRenderTask::finished, this, &Mandelbrot::checkThreadStatus);
   };
+}
+
+void Mandelbrot::checkThreadStatus() {
+  bool allThreadsDone = true;
+  for(auto& worker : workers) {
+    if(!worker->isFinished()) {
+      allThreadsDone = false;
+    }
+  }
+  if(allThreadsDone) {
+    emit finishedRendering();
+  }
 }

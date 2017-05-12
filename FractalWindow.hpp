@@ -64,6 +64,16 @@ class FractalWindow : public QDialog {
      * @see importFractal
      */
     void exportFractal();
+    /**
+     * Slot:
+     * Zeigt einen kleinen Indikator dafür, dass etwas gerade getan wird.
+     */
+    void showWaitingIndicator();
+    /**
+     * Slot:
+     * Verbirgt den Indikator dafür, dass etwas gerade getan wird.
+     */
+    void hideWaitingIndicator();
 
   public:
     /**

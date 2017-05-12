@@ -22,6 +22,14 @@ class Mandelbrot : public Fractal {
      */
     void updatePixels(std::vector<FractalPixelIteration> pixelIterations);
 
+  protected slots:
+    /**
+     * Slot:
+     * Überprüft, ob alle Render-Thread fertig sind und löst
+     * letztendlich das Signal "finishedRendering" aus.
+     */
+    void checkThreadStatus();
+
   public:
     /**
      * Erzeugt eine neue Instanz des Mandebrot-Fraktals.
