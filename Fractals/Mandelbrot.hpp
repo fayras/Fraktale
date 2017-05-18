@@ -2,7 +2,7 @@
 #define FRAKTALE_MANDELBROT_HPP
 
 #include "Fractal.hpp"
-#include "FractalPixelIteration.hpp"
+#include "FractalPixel.hpp"
 #include "../Rendering/MandelbrotRenderTask.hpp"
 #include <vector>
 
@@ -20,7 +20,7 @@ class Mandelbrot : public Fractal {
      * @slot
      * @param pixelIterations Ein Array mit den berechneten Pixeln.
      */
-    void updatePixels(std::vector<FractalPixelIteration> pixelIterations);
+    void updatePixels(std::vector<FractalPixel> pixelIterations);
 
   private slots:
     /**

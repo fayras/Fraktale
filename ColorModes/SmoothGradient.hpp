@@ -15,7 +15,7 @@ class SmoothGradient : public ColorMode {
      * @param smooth Sollen Farben interpoliert werden, oder nicht.
      */
     SmoothGradient(bool smooth = true);
-    QRgb getColor(FractalPixelIteration& it) const override;
+    QRgb getColor(FractalPixel& it) const override;
 
   private:
     /**

@@ -119,9 +119,6 @@ void FractalWindow::draw() {
 
 void FractalWindow::wheelEvent(QWheelEvent *event) {
   if(canvas.underMouse()) {
-    //QPointF mousePos = canvas.mapFromGlobal(QCursor::pos());
-    //QPointF offset = QPointF(canvas.width() / 2.0, canvas.height() / 2.0) - mousePos;
-    //currentFractal->translate(offset);
     double steps = event->delta() / 8 / 15.0;
     if(steps < 0) {
       currentFractal->scale(-1.0 / (steps * 2.0));

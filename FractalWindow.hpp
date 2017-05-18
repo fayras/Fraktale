@@ -194,7 +194,7 @@ void FractalWindow::registerFractal(Fractals::ID fractalID, QString label) {
   // Fügt einen Eintrag zu der Combobox der Fraktale hinzu.
   fractalsCombo->addItem(label, QVariant::fromValue(fractalID));
   // Speichert eine Funktion zum Erzeugen eines neuen Fraktals,
-  // welche bei Bedarf durch AUsführen ein neues Fraktal generiert.
+  // welche bei Bedarf durch Ausführen ein neues Fraktal generiert.
   fractalFactory[fractalID] = [this] () -> Fractal::Ptr {
     return Fractal::Ptr(new T(canvas.size().width(), canvas.size().height()));
   };

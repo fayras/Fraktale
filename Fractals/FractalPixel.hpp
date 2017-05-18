@@ -8,7 +8,7 @@
  * Speichert Informationen zu Berechneten Pixel.
  * Zur Zeit nur für Mandelbrot und Julia interessant.
  */
-struct FractalPixelIteration {
+struct FractalPixel {
   /**
    * Erzeugt eine neue Instanz der Klasse.
    *
@@ -19,7 +19,7 @@ struct FractalPixelIteration {
    * @param pXV Der x-Wert der Berechnung.
    * @param pYV Der y-Wert der Berechnung.
    */
-  FractalPixelIteration(int pX, int pY, int pIt, int pMaxIt, double pXV, double pYV) {
+  FractalPixel(int pX, int pY, int pIt, int pMaxIt, double pXV, double pYV) {
     x = pX; y = pY; iterations = pIt; maxIterations = pIt; xValue = pXV; yValue = pYV;
   }
 
@@ -49,6 +49,6 @@ struct FractalPixelIteration {
   double yValue;
 };
 
-Q_DECLARE_METATYPE(std::vector<FractalPixelIteration>);
+Q_DECLARE_METATYPE(std::vector<FractalPixel>);
 
 #endif //FRAKTALE_FRACTALPIXELITERATION_HPP

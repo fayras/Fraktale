@@ -1,5 +1,5 @@
 #include "SmoothGradient.hpp"
-#include "../Fractals/FractalPixelIteration.hpp"
+#include "../Fractals/FractalPixel.hpp"
 #include <QColor>
 #include <cmath>
 
@@ -17,7 +17,7 @@ SmoothGradient::SmoothGradient(bool smooth)
    */
 }
 
-QRgb SmoothGradient::getColor(FractalPixelIteration& it) const {
+QRgb SmoothGradient::getColor(FractalPixel& it) const {
   if(!smooth) {
     return ColorMode::getColor(it);
   }

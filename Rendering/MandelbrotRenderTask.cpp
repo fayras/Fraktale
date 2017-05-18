@@ -1,5 +1,5 @@
 #include "MandelbrotRenderTask.hpp"
-#include "../Fractals/FractalPixelIteration.hpp"
+#include "../Fractals/FractalPixel.hpp"
 
 MandelbrotRenderTask::MandelbrotRenderTask(QObject *parent)
   : RenderTask(parent), maxIterations(100), rect(), fractalBounds()
@@ -12,7 +12,7 @@ MandelbrotRenderTask::~MandelbrotRenderTask() {
 
 void MandelbrotRenderTask::run() {
   for(int pass = 8; pass > 0; pass = pass >> 1) {
-    std::vector<FractalPixelIteration> pixelIterations;
+    std::vector<FractalPixel> pixelIterations;
     double passMaxIt = maxIterations;
     for(int w = rect.left(); w < rect.right(); w += pass) {
       double x0 = map(w, rect.left(), rect.right(), fractalBounds.left(), fractalBounds.right());
@@ -33,9 +33,9 @@ void MandelbrotRenderTask::run() {
         }
 
         if(iterations < passMaxIt) {
-          pixelIterations.push_back(FractalPixelIteration(w, h, iterations, (int) passMaxIt, x, y));
+          pixelIterations.push_back(FractalPixel(w, h, iterations, (int) passMaxIt, x, y));
         } else {
-          pixelIterations.push_back(FractalPixelIteration(w, h, -1, (int) passMaxIt, x, y));
+          pixelIterations.push_back(FractalPixel(w, h, -1, (int) passMaxIt, x, y));
         }
       }
     }

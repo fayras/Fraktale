@@ -1,7 +1,7 @@
 #include "Mandelbrot.hpp"
 #include "../Rendering/MandelbrotRenderTask.hpp"
 #include "../ColorModes/Identifiers.hpp"
-#include "../ColorModes/WaveLengthMode.hpp"
+#include "../ColorModes/WaveLength.hpp"
 #include "../ColorModes/Grayscale.hpp"
 #include <QPainter>
 #include <cmath>
@@ -10,11 +10,11 @@
 Mandelbrot::Mandelbrot(int width, int height)
   : Fractal(width, height), bounds(-2.5, -1, 3.5, 2)
 {
-  qRegisterMetaType<std::vector<FractalPixelIteration> >();
+  qRegisterMetaType<std::vector<FractalPixel> >();
   createWorkers();
   registerColorMode<Grayscale>(Colors::ID::GRAYSCALE);
-  registerColorMode<WaveLengthMode>(Colors::ID::WAVELENGTH, false);
-  registerColorMode<WaveLengthMode>(Colors::ID::SMOOTH_WAVELENGTH, true);
+  registerColorMode<WaveLength>(Colors::ID::WAVELENGTH, false);
+  registerColorMode<WaveLength>(Colors::ID::SMOOTH_WAVELENGTH, true);
   setColorMode(Colors::ID::WAVELENGTH);
 }
 
@@ -38,8 +38,8 @@ void Mandelbrot::update() {
   }
 }
 
-void Mandelbrot::updatePixels(std::vector<FractalPixelIteration> pixelIterations) {
-  for(FractalPixelIteration& it : pixelIterations) {
+void Mandelbrot::updatePixels(std::vector<FractalPixel> pixelIterations) {
+  for(FractalPixel& it : pixelIterations) {
     if(it.x < image.width() && it.y < image.height()) {
       image.setPixel(it.x, it.y, colormap->getColor(it));
     }

@@ -4,7 +4,7 @@
 #include "RenderTask.hpp"
 #include <QtCore/QRect>
 
-struct FractalPixelIteration;
+struct FractalPixel;
 
 /**
  * Berechnet einzelne Pixel der Mandelbrot-Menge in einem Thread.
@@ -30,7 +30,7 @@ class MandelbrotRenderTask : public RenderTask {
      * @param pixelIterations Ein std::vector mit den iterierten Pixeln.
      * @see FractalPixelIteration
      */
-    void rendered(std::vector<FractalPixelIteration> pixelIterations);
+    void rendered(std::vector<FractalPixel> pixelIterations);
 
   public:
     /**

@@ -4,7 +4,7 @@
 #include <QtGui/QRgb>
 #include <memory>
 
-struct FractalPixelIteration;
+struct FractalPixel;
 
 /**
  * Eine abstrakte Klasse für Farbgebungen.
@@ -29,7 +29,7 @@ class ColorMode {
      * @param it Der berechnete Pixel.
      * @return
      */
-    virtual QRgb getColor(FractalPixelIteration& it) const;
+    virtual QRgb getColor(FractalPixel& it) const;
 
   protected:
     /**

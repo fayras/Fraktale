@@ -1,5 +1,5 @@
 #include "JuliaRenderTask.hpp"
-#include "../Fractals/FractalPixelIteration.hpp"
+#include "../Fractals/FractalPixel.hpp"
 #include <QDebug>
 
 JuliaRenderTask::JuliaRenderTask(QObject *parent)
@@ -13,7 +13,7 @@ JuliaRenderTask::~JuliaRenderTask() {
 
 void JuliaRenderTask::run() {
   for(int pass = 8; pass > 0; pass = pass >> 1) {
-    std::vector<FractalPixelIteration> pixelIterations;
+    std::vector<FractalPixel> pixelIterations;
     double passMaxIt = maxIterations / pass;
     for(int w = rect.left(); w < rect.right(); w += pass) {
       for(int h = rect.top(); h < rect.bottom(); h += pass) {
@@ -32,9 +32,9 @@ void JuliaRenderTask::run() {
         }
 
         if(iterations < passMaxIt) {
-          pixelIterations.push_back(FractalPixelIteration(w, h, iterations, (int) passMaxIt, x, y));
+          pixelIterations.push_back(FractalPixel(w, h, iterations, (int) passMaxIt, x, y));
         } else {
-          pixelIterations.push_back(FractalPixelIteration(w, h, -1, (int) passMaxIt, x, y));
+          pixelIterations.push_back(FractalPixel(w, h, -1, (int) passMaxIt, x, y));
         }
       }
     }

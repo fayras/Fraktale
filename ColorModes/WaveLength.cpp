@@ -1,19 +1,19 @@
-#include "WaveLengthMode.hpp"
+#include "WaveLength.hpp"
 #include <cmath>
 
-WaveLengthMode::WaveLengthMode(bool smooth)
+WaveLength::WaveLength(bool smooth)
     : SmoothGradient(smooth)
 {
   fillColormap();
 }
 
-void WaveLengthMode::fillColormap() {
+void WaveLength::fillColormap() {
   for (int i = 0; i < ColormapSize; ++i) {
     colormap[i] = rgbFromWaveLength(380.0 + (i * 400.0 / ColormapSize));
   }
 }
 
-QRgb WaveLengthMode::rgbFromWaveLength(double wave) {
+QRgb WaveLength::rgbFromWaveLength(double wave) {
   double r = 0.0;
   double g = 0.0;
   double b = 0.0;
