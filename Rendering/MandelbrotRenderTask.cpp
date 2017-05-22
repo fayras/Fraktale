@@ -11,12 +11,15 @@ MandelbrotRenderTask::~MandelbrotRenderTask() {
 }
 
 void MandelbrotRenderTask::run() {
+  // Gehe die Pixel mehrmals durch und berechne immer feinere Strukturen.
   for(int pass = 8; pass > 0; pass = pass >> 1) {
     std::vector<FractalPixel> pixelIterations;
     double passMaxIt = maxIterations;
     for(int w = rect.left(); w < rect.right(); w += pass) {
+      // Bilde die Pixel-Koordinaten in die Koordinaten des Fraktals um.
       double x0 = map(w, rect.left(), rect.right(), fractalBounds.left(), fractalBounds.right());
       for(int h = rect.top(); h < rect.bottom(); h += pass) {
+        // Bilde die Pixel-Koordinaten in die Koordinaten des Fraktals um.
         double y0 = map(h, rect.top(), rect.bottom(), fractalBounds.top(), fractalBounds.bottom());
         double x = 0;
         double y = 0;
@@ -35,6 +38,8 @@ void MandelbrotRenderTask::run() {
         if(iterations < passMaxIt) {
           pixelIterations.push_back(FractalPixel(w, h, iterations, (int) passMaxIt, x, y));
         } else {
+          // Falls die maximale Iterationsanzahl erreicht wurde, speichere "-1" ab,
+          // damit dies von Farbmodi erkannt werden kann.
           pixelIterations.push_back(FractalPixel(w, h, -1, (int) passMaxIt, x, y));
         }
       }

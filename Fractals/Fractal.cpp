@@ -25,11 +25,15 @@ void Fractal::draw(Canvas& target) {
 std::map<QString, QWidget*> Fractal::getSettings() {
   std::map<QString, QWidget *> map;
 
+  // Combobox, in der die Farben ausgewählt werden können.
   QComboBox* colors = new QComboBox;
   colors->addItem("Graustufen", QVariant::fromValue(Colors::ID::GRAYSCALE));
   colors->addItem("Wellenlänge", QVariant::fromValue(Colors::ID::WAVELENGTH));
   colors->addItem("Fließend", QVariant::fromValue(Colors::ID::SMOOTH_WAVELENGTH));
   colors->setCurrentIndex(1);
+
+  // Fügt die Combobox den Einstellungen hinzu und verbindet
+  // Signale, diese Einstellung zu benutzen.
   map.insert(std::pair<QString, QWidget*>("Farbgebung", colors));
   connect(colors, &QComboBox::currentTextChanged, [=](const QString& text){
     this->setColorMode(colors->currentData().value<Colors::ID>());
@@ -41,6 +45,7 @@ std::map<QString, QWidget*> Fractal::getSettings() {
     }
   });
 
+  // Einstellung für Iterationen in Form einer SpinBox.
   QSpinBox* iter = new QSpinBox;
   iter->setRange(1, 5000);
   iter->setValue(maxIterations);
@@ -57,9 +62,12 @@ void Fractal::setMaxIterations(unsigned iterations) {
 }
 
 void Fractal::setColorMode(Colors::ID colorsID) {
+  // Finde den richtigen Farbmodus zur ID.
   auto found = colorsFactory.find(colorsID);
   assert(found != colorsFactory.end());
 
+  // Sobald der Farbmodus gefunden wurde, führe die
+  // Funktion zum Instanzieren des Farbmodus.
   colormapID = colorsID;
   colormap = std::move(found->second());
   emit colorChanged(colorsID);
@@ -82,6 +90,8 @@ void Fractal::scale(double factor) {
   QPainter painter(&image);
 
   image.fill(Qt::black);
+  // Verschiebe den Ursprung in das Zentrum des Bildes,
+  // so dass dieses richtig skaliert werden kann.
   painter.translate(image.width() / 2, image.height() / 2);
   painter.scale(factor, factor);
   painter.translate(-image.width() / 2, -image.height() / 2);

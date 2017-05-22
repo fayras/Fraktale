@@ -5,7 +5,6 @@
 #include <QWheelEvent>
 #include <cassert>
 #include <QMenu>
-#include <QDebug>
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QFileDialog>
 #include "FractalWindow.hpp"

@@ -19,7 +19,7 @@ class SmoothGradient : public ColorMode {
 
   private:
     /**
-     * Interpoliert den Farbwert zwischen zwei Farben.
+     * Interpoliert den Farbwert linear zwischen zwei Farben.
      *
      * @param start Erste Farbe.
      * @param end Zweite Farbe.
@@ -33,6 +33,10 @@ class SmoothGradient : public ColorMode {
      * Sollen die Farben interpoliert werden?
      */
     bool smooth;
+    /**
+     * Der Wert für log(2), damit dieser nicht immer wieder berechnet werden muss.
+     */
+    double log_2;
 };
 
 #endif //FRAKTALE_SMOOTHGRADIENT_HPP

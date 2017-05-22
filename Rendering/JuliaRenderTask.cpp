@@ -12,11 +12,13 @@ JuliaRenderTask::~JuliaRenderTask() {
 }
 
 void JuliaRenderTask::run() {
+  // Gehe die Pixel mehrmals durch und berechne immer feinere Strukturen.
   for(int pass = 8; pass > 0; pass = pass >> 1) {
     std::vector<FractalPixel> pixelIterations;
     double passMaxIt = maxIterations / pass;
     for(int w = rect.left(); w < rect.right(); w += pass) {
       for(int h = rect.top(); h < rect.bottom(); h += pass) {
+        // Bilde die Pixel-Koordinaten in die Koordinaten des Fraktals um.
         double x = map(w, rect.left(), rect.right(), fractalBounds.left(), fractalBounds.right());
         double y = map(h, rect.top(), rect.bottom(), fractalBounds.top(), fractalBounds.bottom());
         int iterations = 0;

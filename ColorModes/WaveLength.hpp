@@ -21,6 +21,12 @@ class WaveLength : public SmoothGradient {
     void fillColormap() override;
 
   private:
+    /**
+     * Berechnet den Farbwert zu einer bestimmten Wellenlänge.
+     * Entnommen aus http://doc.qt.io/qt-5/qtcore-threads-mandelbrot-renderthread-cpp.html.
+     *
+     * @param  wave Wellenlänge.
+     */
     QRgb rgbFromWaveLength(double wave);
 };
 

@@ -111,6 +111,9 @@ class FractalWindow : public QDialog {
      * Variable, welche angibt, ob das Fraktal zur Zeit bewegt wird.
      */
     bool isDragging;
+    /**
+     * Gibt an, ob gerade ein Fraktal gerendert wird.
+     */
     bool isRendering;
     /**
      * Die Letzte Position der Maus beim Bewegen des

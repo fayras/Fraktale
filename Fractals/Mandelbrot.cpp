@@ -11,7 +11,9 @@ Mandelbrot::Mandelbrot(int width, int height)
   : Fractal(width, height), bounds(-2.5, -1, 3.5, 2)
 {
   qRegisterMetaType<std::vector<FractalPixel> >();
+  // Erzeuge die Workers zum Berechnen des Fraktals.
   createWorkers();
+  // Registriere die Farbmodie, welche benutzt werden können.
   registerColorMode<Grayscale>(Colors::ID::GRAYSCALE);
   registerColorMode<WaveLength>(Colors::ID::WAVELENGTH, false);
   registerColorMode<WaveLength>(Colors::ID::SMOOTH_WAVELENGTH, true);

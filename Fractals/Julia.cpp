@@ -7,7 +7,9 @@ Julia::Julia(int width, int height)
     : Mandelbrot(width, height), rPart(-0.8), iPart(0.16)
 {
   bounds.setRect(-2, -1.5, 4, 3);
+  // Entferne die Workers des Mandelbrot Fraktals...
   Mandelbrot::workers.clear();
+  // ... und erstelle die neuen Worker.
   createWorkers();
 }
 
@@ -57,18 +59,23 @@ void Julia::update() {
 std::map<QString, QWidget*> Julia::getSettings() {
 	std::map<QString, QWidget*> settings = Fractal::getSettings();
 
+  // Slider Einstellung zum Ändern des Real-/Imaginärteils.
 	QSlider* realPartSlider = new QSlider(Qt::Horizontal);
 	realPartSlider->setFocusPolicy(Qt::StrongFocus);
+  // Der Slider kann standardmäßig nur Integer verabrieten, deswegen
+  // werden die Werte mit 100 multipliziert.
 	realPartSlider->setMinimum(-250);
 	realPartSlider->setMaximum(100);
 	realPartSlider->setSingleStep(1);
   realPartSlider->setValue(-80);
 	settings.insert(std::pair<QString, QWidget*>("Teil reell", realPartSlider));
 	connect(realPartSlider, &QSlider::valueChanged, [=](const int value) {
+    // Da Slider nur Interger verabrieten kann, siehe oben.
 		rPart = (double) value / 100.0;
 		update();
 	});
   connect(this, &Julia::rPartChanged, [=](const double value) {
+    // Da Slider nur Interger verabrieten kann, siehe oben.
     realPartSlider->setValue((int) (value * 100));
   });
 
@@ -90,28 +97,13 @@ std::map<QString, QWidget*> Julia::getSettings() {
 	return settings;
 }
 
-/*
-void Julia::draw(Canvas &target) {
-	Fractal::draw(target);
-
-  QPainter painter(&image);
-
-	QString text = "Reeller Teil: " + QString::number(rPart) + ", Imaginärer Teil: " + QString::number(iPart);
-	QFontMetrics metrics = painter.fontMetrics();
-	int textWidth = metrics.width(text);
-
-	painter.setPen(Qt::NoPen);
-	painter.setBrush(QColor(0, 0, 0, 127));
-	painter.drawRect((image.width() - textWidth) - 10, 0, textWidth + 10, metrics.lineSpacing() + 5);
-	painter.setPen(Qt::white);
-	painter.drawText(image.width() - textWidth - 5, metrics.leading() + metrics.ascent(), text);
-}
-*/
 QString Julia::getOverlayInformation() const {
   return "Reeller Teil: " + QString::number(rPart) + ", Imaginärer Teil: " + QString::number(iPart);
 }
 
 void Julia::checkThreadStatus() {
+  // Überprüfe, ob alle Threads fertig mit ihren
+  // Berechnungen sind.
   bool allThreadsDone = true;
   for(auto& worker : workers) {
     if(!worker->isFinished()) {

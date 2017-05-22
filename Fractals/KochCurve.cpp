@@ -20,6 +20,7 @@ void KochCurve::update() {
   emit startRendering();
   image.fill(Qt::white);
   points.clear();
+  // Die drei Anfangslinien, welche die Schneeflocke ausmachen.
   Line line1(QPointF(0.15, 0.7), QPointF(0.5, 0.01));
   Line line2(QPointF(0.5, 0.01), QPointF(0.85, 0.7));
   Line line3(QPointF(0.85, 0.7), QPointF(0.15, 0.7));
@@ -33,6 +34,8 @@ void KochCurve::curve(int depth, Line line) {
     points.push_back(line.start);
     points.push_back(line.end);
   } else {
+    // Hole die neuen Punkte, führe den Algorithmus
+    // für die Unterlinien aus.
     QPointF p2 = line.point2();
     QPointF p3 = line.point3();
     QPointF p4 = line.point4();
@@ -57,7 +60,7 @@ void KochCurve::scale(double factor) {
 
 void KochCurve::updatePixels(std::vector<QPointF> points) {
   QPainter painter(&image);
-  //painter.setRenderHint(QPainter::Antialiasing);
+
   painter.translate(image.width() / 2, image.height() / 2);
   painter.scale(_scale, _scale);
   painter.translate(-image.width() / 2, -image.height() / 2);
@@ -111,4 +114,3 @@ void KochCurve::checkThreadStatus() {
     emit finishedRendering();
   }
 }
-
